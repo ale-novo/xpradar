@@ -54,7 +54,7 @@ Edit the file inidata/default.ini and change the following items according to yo
 
 ```
 cd src/main
-./xpopengc default
+./xpopengc wxr
 ```
 
 It should start a X window with a default gauge and tell you on the command line that it expects a X-Plane connection
