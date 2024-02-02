@@ -1,3 +1,13 @@
+## Resolve above depencies, for debian/ubuntu:
+
+```
+sudo apt install libfltk1.3-dev -y
+sudo apt install libftgl-dev -y
+sudo apt install libfreetype6-dev -y
+sudo apt install build-essential -y
+sudo apt install autoconf -y
+```
+
 ## Compile the plugin
 
 Set up all automake/autoconf files:
@@ -20,16 +30,6 @@ This will generate a directory plugins/xpserver.
 Copy the xpserver subdirectory to your X-Plane directory under Resources/plugins/
 
 ## Compile the radar
-
-resolve above depencies, for debian/ubuntu:
-
-```
-sudo apt install libfltk1.3-dev -y
-sudo apt install libftgl-dev -y
-sudo apt install libfreetype6-dev -y
-sudo apt install build-essential -y
-sudo apt install autoconf -y
-```
 
 Set up autoconf:
 
