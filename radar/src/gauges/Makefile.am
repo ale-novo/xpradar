@@ -8,7 +8,7 @@ WXR/ogcDrawWXR.cpp \
 WXR/ogcDrawWXRInfo.cpp \
 Dummy/ogcDummyGauge.cpp \
 BasicClock/ogcBasicClock.cpp \
-BasicClock/ogcBasicClockComponent.cpp \
+BasicClock/ogcBasicClockComponent.cpp
 
 noinst_HEADERS = \
 WXR/ogcWXR.h \
@@ -16,4 +16,4 @@ WXR/ogcDrawWXR.h \
 WXR/ogcDrawWXRInfo.h \
 Dummy/ogcDummyGauge.h \
 BasicClock/ogcBasicClock.h \
-BasicClock/ogcBasicClockComponent.h \
+BasicClock/ogcBasicClockComponent.h

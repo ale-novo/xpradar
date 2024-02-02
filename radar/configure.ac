@@ -4,7 +4,7 @@
 AC_PREREQ([2.50])
 AC_INIT([xpopengc], [0.81], [Reto Stockli])
 AC_CONFIG_SRCDIR([src/main/main.cpp])
-AM_INIT_AUTOMAKE([-Wall subdir-objects])
+AM_INIT_AUTOMAKE(foreign)
 AM_CONFIG_HEADER([config.h])
 
 # Determine operating system
