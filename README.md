@@ -50,6 +50,8 @@ This should build the application xpopengc in src/main.
 
 ### Run:
 
+Start X-Plane first.
+
 Edit the file inidata/default.ini and change the following items according to your OpenGC/X-Plane configuration:
 
 ```
