@@ -1,25 +1,3 @@
-/*=========================================================================
-
-  OpenGC - The Open Source Glass Cockpit Project
-  Please see our web site at http://www.opengc.org
-  
-  Module:  $RCSfile: ogcRenderObject.h,v $
-
-  Last modification:
-    Date:      $Date: 2004/10/14 19:27:54 $
-    Version:   $Revision: 1.1.1.1 $
-    Author:    $Author: damion $
-  
-  Copyright (c) 2001-2003 Damion Shelton
-  All rights reserved.
-  See Copyright.txt or http://www.opengc.org/Copyright.htm for details.
-
-  This software is distributed WITHOUT ANY WARRANTY; without even 
-  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-  PURPOSE.  See the above copyright notice for more information.
-
-=========================================================================*/
-
 /**
  * RenderObjects are the base class for any class which draws in
  * RenderWindow and defines a client rendering space. Currently
@@ -32,7 +10,6 @@
 #include "ogcObject.h"
 #include "ogcOrderedPair.h"
 #include "ogcFontManager.h"
-#include "ogcNavDatabase.h"
 #include "ogcGLHeaders.h"
 #include "ogcMessages.h"
 
@@ -55,9 +32,6 @@ public:
   /** Set the font manager */
   void SetFontManager(FontManager* pFontManager) { m_pFontManager = pFontManager; }
   
-  /** Set the nav database */
-  void SetNavDatabase(NavDatabase* pNavDatabase) { m_pNavDatabase = pNavDatabase; }
-
   /** Set the monitor calibration */
   void SetUnitsPerPixel(double unitsPerPixel);
 
@@ -109,9 +83,6 @@ protected:
   /** Pointer to font manager */
   static FontManager* m_pFontManager;
   
-  /** Pointer to nav database */
-  static NavDatabase* m_pNavDatabase;
-
   /** Set by the render window to describe pixel-realspace conversions */
   double m_UnitsPerPixel;
 

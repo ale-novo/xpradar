@@ -1,32 +1,3 @@
-/*=========================================================================
-
-  OpenGC - The Open Source Glass Cockpit Project
-  Please see our web site at http://www.opengc.org
-
-  Copyright (C) 2001-2021 by:
-  Original author:
-  Damion Shelton
-  Contributors (in alphabetical order):
-  Michael DeFeyter
-  John Wojnaroski
-  Reto Stockli
-  
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License as
-  published by the Free Software Foundation; either version 2 of the
-  License, or (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-  =========================================================================*/
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -70,7 +41,6 @@ namespace OpenGC
     m_pFontManager = 0;
     m_pRenderWindow = 0;
     m_pDataSource = 0;
-    m_pNavDatabase = 0;
     verbosity = 0;
 
     m_InitState = 0;
@@ -179,7 +149,6 @@ namespace OpenGC
     DummyGauge dummyRenderObject;
     dummyRenderObject.SetDataSource(m_pDataSource);
     dummyRenderObject.SetFontManager(m_pFontManager);
-    dummyRenderObject.SetNavDatabase(m_pNavDatabase);
   
     if (verbosity > 1) printf("AppObject - Finished creating the dummy render object\n");
 
@@ -216,13 +185,6 @@ namespace OpenGC
 	if (verbosity > 1) cout << "AppObject - Deleting data source\n";
 	delete m_pDataSource;
 	m_pDataSource = 0;
-      }
-  
-    if (m_pNavDatabase != 0)
-      {
-	if (verbosity > 1) cout << "AppObject - Deleting nav database\n";
-	delete m_pNavDatabase;
-	m_pNavDatabase = 0;
       }
   
     if (verbosity > 1) cout << "AppObject - Finished memory cleanup\n";
@@ -275,15 +237,6 @@ namespace OpenGC
       // path to GSHHG Files for shoreline/lake Rendering in NAV Display.
       strcpy(m_GSHHGPath,iniparser_getstring(ini,"General:GSHHGPath",default_gshhg_path));
 
-      // Initialize the nav database
-      if (strcmp(m_XPlanePath,"")) {
-	if (verbosity > 0) printf("AppObject - Initializing the navigation database in %s\n", m_XPlanePath);
-	m_pNavDatabase = new NavDatabase;
-	if (!m_pNavDatabase->InitDatabase(m_XPlanePath,m_DEMPath,m_GSHHGPath,m_customdata)) return false;
-      } else {
-	if (verbosity > 0) printf("AppObject - Not Loading navigation database since X-Plane path is empty.\n");
-      }
-    
       // Set up font manager
       m_pFontManager = new FontManager();
 

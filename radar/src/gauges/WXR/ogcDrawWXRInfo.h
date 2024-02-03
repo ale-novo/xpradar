@@ -1,14 +1,3 @@
-/*=========================================================================
-
-  OpenGC - The Open Source Glass Cockpit Project
-  Please see our web site at http://www.opengc.org
-
-  This software is distributed WITHOUT ANY WARRANTY; without even 
-  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-  PURPOSE.  See the above copyright notice for more information.
-
-=========================================================================*/
-
 #ifndef ogcDrawWXRInfo_h
 #define ogcDrawWXRInfo_h
 
