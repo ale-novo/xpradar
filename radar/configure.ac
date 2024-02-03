@@ -1,4 +1,3 @@
-# Autoconf
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.50])
@@ -59,11 +58,6 @@ AC_MSG_RESULT([$debugit])
 
 if test "x$debugit" = xyes; then
     AC_DEFINE([DEBUG],[],[Debug Mode])
-# DEBUGGING USING LEAK CHECK
-#    CXXFLAGS="$CXXFLAGS -g -Wall -Wpedantic -Wno-uninitialized -fsanitize=address"
-# REGULAR DEBUGGING
-#    CXXFLAGS="$CXXFLAGS -g -Wall -Wno-uninitialized"
-# DEBUGGING USING GPROF PROFILING
     CXXFLAGS="$CXXFLAGS -pg -g -Wall -Wno-uninitialized"
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
@@ -78,9 +72,7 @@ CXXFLAGS="$CXXFLAGS -pthread"
 CFLAGS="$CFLAGS -pthread"
 
 # Checks for libraries and headers.
-
 # check for OpenGL libraries and headers
-# Not tested on Linux
 HAVE_GL=yes
 AC_MSG_CHECKING([whether a location for the OpenGL library was specified])
 AC_ARG_WITH([gl],
@@ -104,7 +96,6 @@ else
 # Linux: check presence of OpenGL library and headers
    AC_CHECK_LIB(GL, main, , unset HAVE_GL, -lGL)
    AC_CHECK_LIB(GLU, main, , unset HAVE_GL, -lGLU)
-#   AC_CHECK_LIB(glut, main, , unset HAVE_GL,-lglut)
 
    AC_CHECK_HEADERS(GL/gl.h GL/glu.h GL/glext.h, , unset HAVE_GL,
        [
@@ -125,7 +116,6 @@ else
 # Windows: check presence of OpenGL32 / glu32 library and headers
    AC_CHECK_LIB(opengl32, main, , unset HAVE_GL, -lopengl32)
    AC_CHECK_LIB(glu32, main, , unset HAVE_GL, -lglu32)
-#   AC_CHECK_LIB(glut32, main, , unset HAVE_GL, -lglut32)
 
    AC_CHECK_HEADERS(GL/gl.h GL/glu.h GL/glext.h, , unset HAVE_GL,
        [
@@ -150,7 +140,6 @@ if test -z "$HAVE_GL"; then
     AC_MSG_ERROR([Can't find OpenGL libraries, or can't link a program to it.
 please use --with-gl=<directory> to specify a custom installation directory for OpenGL.])
 fi
-
 
 # check for the FLTK libraries and headers
 HAVE_FLTK=yes
@@ -179,7 +168,6 @@ if test -z "$HAVE_FLTK"; then
 please use --with-fltk=<directory> to specify a custom installation directory for fltk.])
 fi
 
-
 # check for FREETYPE2 library and headers
 HAVE_FREETYPE=yes
 AC_MSG_CHECKING([whether a location for the freetype library was specified])
@@ -198,27 +186,14 @@ else
 fi
 
 AC_CHECK_LIB(z, main)
-#if test "x$os" = xwin; then
-#    AC_CHECK_LIB(bz2, main)
-#    AC_CHECK_LIB(brotlicommon, main)
-#    AC_CHECK_LIB(brotlidec, main)
-#    AC_CHECK_LIB(png, main)
-#    AC_CHECK_LIB(graphite2, main)
-#    AC_CHECK_LIB(harfbuzz, main)
-#fi
 
 AC_CHECK_LIB(freetype, main, , unset HAVE_FREETYPE)
 AC_CHECK_HEADER(ft2build.h, , unset HAVE_FREETYPE)
-#AC_CHECK_HEADER(freetype.h, , unset HAVE_FREETYPE,
-#				       [include <ft2build.h>
-#				        include FT_FREETYPE_H
-#				])
 
 if test -z "$HAVE_FREETYPE"; then
     AC_MSG_ERROR([Can't find freetype library, or can't link a program to it.
 please use --with-freetype=<directory> to specify a custom installation directory for freetype.])
 fi
-
 
 # check for the FTGL library and headers (depends on freetype)
 HAVE_FTGL=yes
@@ -261,38 +236,6 @@ AC_CHECK_FUNCS([bzero floor memset socket sqrt strcspn malloc])
 
 # Add local source code directories to include directives
 CPPFLAGS="$CPPFLAGS -I$PWD/src/base -I$PWD/src/datasources -I$PWD/src/gauges -I$PWD/src/main"
-
-
-
-#HAVE_LIBXPCOCKPIT=yes
-#AC_MSG_CHECKING([whether a location for the xpcockpit library was specified])
-#AC_ARG_WITH([libxpcockpit],
-#[AS_HELP_STRING([--with-libxpcockpit=<directory>],
-#                [Specify location the xpcockpit library. Configure will expect
-#to find headers in <directory>/include and libraries in <directory>/lib.])]
-#,
-#                [LIBXPCOCKPITDIR=$with_libxpcockpit])
-#if test -z "$LIBXPCOCKPITDIR" ; then
-#    AC_MSG_RESULT([no])
-#    LIBS="$LIBS -L$ac_pwd/../libxpcockpit/lib"
-#    CPPFLAGS="$CPPFLAGS -I$ac_pwd/../libxpcockpit/include"
-#else
-#    AC_MSG_RESULT([$LIBXPCOCKPITDIR])
-#    LIBS="$LIBS -L$LIBXPCOCKPITDIR/lib"
-#    CPPFLAGS="$CPPFLAGS -I$LIBXPCOCKPITDIR/include"
-#fi
-#
-#AC_CHECK_HEADER([xplanebeacon.h],,unset HAVE_LIBXPCOCKPIT)
-#AC_CHECK_LIB([xpcockpit],[initialize_beacon_client],,unset HAVE_LIBXPCOCKPIT)
-
-#if test -z "$HAVE_LIBXPCOCKPIT"; then
-#    AC_MSG_ERROR([Can't find xpcockpit library, or can't link a program to it.
-#    Please compile (make) and install (make install) the library in the xpcockpit 
-#    subdirectory libxpcockpit.
-#    In case you have installed it in a custom location, use:
-#    --with-libxpcockpit=<directory> to specify a custom installation directory.])
-#fi
-
 
 # Substitute
 AC_SUBST(AM_CXXFLAGS)

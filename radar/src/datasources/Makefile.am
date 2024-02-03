@@ -1,15 +1,15 @@
 noinst_LIBRARIES = libRadarDataSources.a
-AM_CPPFLAGS += -I$(top_srcdir)/libxpcockpit
+AM_CPPFLAGS += -I$(top_srcdir)/lib
 
 libRadarDataSources_a_SOURCES = \
-$(top_srcdir)/libxpcockpit/check_aircraft.c \
-$(top_srcdir)/libxpcockpit/dictionary.c \
-$(top_srcdir)/libxpcockpit/handleserver.c \
-$(top_srcdir)/libxpcockpit/iniparser.c \
-$(top_srcdir)/libxpcockpit/serverdata.c \
-$(top_srcdir)/libxpcockpit/wxrdata.c \
-$(top_srcdir)/libxpcockpit/xplanebeacon.c \
-$(top_srcdir)/libxpcockpit/xplanewxr.c \
+$(top_srcdir)/lib/check_aircraft.c \
+$(top_srcdir)/lib/dictionary.c \
+$(top_srcdir)/lib/handleserver.c \
+$(top_srcdir)/lib/iniparser.c \
+$(top_srcdir)/lib/serverdata.c \
+$(top_srcdir)/lib/wxrdata.c \
+$(top_srcdir)/lib/xplanebeacon.c \
+$(top_srcdir)/lib/xplanewxr.c \
 DataSource.cpp \
 XPlaneDataSource.cpp
 
