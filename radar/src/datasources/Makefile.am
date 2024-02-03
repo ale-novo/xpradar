@@ -9,9 +9,6 @@ handleudp.c \
 udpdata.c \
 wxrdata.c
 
-EXTRA_DIST = \
-NonFunctional
-
 noinst_HEADERS = \
 ogcDataSource.h \
 ogcXPlaneDataSource.h \

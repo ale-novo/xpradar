@@ -54,7 +54,6 @@ extern "C" {
 //-----------Gauges------------
 #include "WXR/ogcWXR.h"
 #include "Dummy/ogcDummyGauge.h"
-#include "BasicClock/ogcBasicClock.h"
 
 extern int verbosity;
 
@@ -402,8 +401,7 @@ namespace OpenGC
 
     if (verbosity > 0) printf ("AppObject - Gauge %s, xp %f, yp %f, xs %f, ys %f, (arg %i)\n", name, xPos, yPos, xScale, yScale, arg);
 
-    if (strcmp(name, "BasicClock")==0) pGauge = new BasicClock();
-    else if (strcmp(name, "WXR")==0) pGauge = new WXR();
+    if (strcmp(name, "WXR")==0) pGauge = new WXR();
     else {
       printf("Gauge %s not defined in CreateGauge. Aborting\n",name);
       exit(-1);

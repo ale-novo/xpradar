@@ -6,14 +6,10 @@ libOpenGCGauges_a_SOURCES = \
 WXR/ogcWXR.cpp \
 WXR/ogcDrawWXR.cpp \
 WXR/ogcDrawWXRInfo.cpp \
-Dummy/ogcDummyGauge.cpp \
-BasicClock/ogcBasicClock.cpp \
-BasicClock/ogcBasicClockComponent.cpp
+Dummy/ogcDummyGauge.cpp
 
 noinst_HEADERS = \
 WXR/ogcWXR.h \
 WXR/ogcDrawWXR.h \
 WXR/ogcDrawWXRInfo.h \
-Dummy/ogcDummyGauge.h \
-BasicClock/ogcBasicClock.h \
-BasicClock/ogcBasicClockComponent.h
+Dummy/ogcDummyGauge.h
