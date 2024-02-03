@@ -38,21 +38,6 @@ void GlobalIdle(void *)
   Fl::repeat_timeout(appUpdateRate, GlobalIdle);
 }
 
-/* this routine prints the GNU license information */
-void print_license(void)
-{
-  printf("OpenGC for X-Plane Copyright (C) 2009-2015 Reto Stockli\n");
-  printf("\n");
-  printf("Various additions and changes 2015 Hans Jansen\n");
-  printf("\n");
-  printf("This program comes with ABSOLUTELY NO WARRANTY\n");
-  printf("This is free software, and you are welcome to redistribute it\n");
-  printf("under the terms of the GNU General Public License as published by\n");
-  printf("the Free Software Foundation, either version 3 of the License, or\n");
-  printf("any later version. For details see http://www.gnu.org/licenses/gpl.html.\n");
-  printf("\n");
-}
-
 void signal_handler(int sigraised)
 {
   printf("Interrupted ... exiting \n");
@@ -61,8 +46,6 @@ void signal_handler(int sigraised)
 
 int main(int argc, char* argv[])
 {
-  /* print License terms */
-  print_license();
 
   /* evaluate command line arguments */
   argc--;

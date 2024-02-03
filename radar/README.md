@@ -1,11 +1,6 @@
-2019/12/17 Reto Stockli
-
 This is OpenGC adapted for X-Plane by use of a new TCP/IP data plugin between X-Plane
 and OpenGC called XPSERVER. The plugin allows to transfer X-Plane internal and plane
 specific data. The code has been tested on OSX 10.6 and on Ubuntu 18.04
-
-The OpenGC code is based on OpenGC Version 0.55 and 0.57 by D. Shelton (http://opengc.sourceforge.net)
-and is distributed under the GPL framework with limitations as described in Copyright.txt
 
 I have removed the cmake dependency and implemented a standard gnu configure/autoconf/automake toolset.
 Also, several of the codes were cleaned from warnings and the xplane datasource was completely remodeled,
@@ -30,7 +25,6 @@ sudo apt install libftgl-dev -y
 sudo apt install libfreetype6-dev -y
 sudo apt install build-essential -y
 sudo apt install autoconf -y
-
 
 In case you cloned from git, please first run these in order to complete automake/autoconf file structure:
 autoreconf
@@ -75,9 +69,3 @@ from NOAA (download and unzip gshhg-bin-X.Y.Z.zip):
 https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/
 
 and set GSHHGPath under "general" in the ini file to the directory where GSHHG files are stored
-
-
-
-
-Good flight,
-Reto Stockli
