@@ -1,5 +1,3 @@
-2020/05/03 Reto Stockli / Hans Jansen
-
 This file documents changes since Version 0.60
 
 Version 0.81
