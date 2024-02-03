@@ -6,4 +6,4 @@ autoreconf
 
 ./configure
 make
-make install
+sudo make install
