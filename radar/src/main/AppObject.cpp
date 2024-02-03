@@ -10,9 +10,13 @@
 
 //---------Base Stuff----------
 #include <FL/Fl.H>
+
+extern "C" {
 #include "dictionary.h"
 #include "iniparser.h"
 #include "wxrdata.h"
+}
+
 #include "AppObject.h"
 #include "RenderObject.h"
 

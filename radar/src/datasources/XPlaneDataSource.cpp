@@ -24,11 +24,12 @@
 #include "DataSource.h"
 #include "XPlaneDataSource.h"
 
+extern "C" {
 #include "handleserver.h"
 #include "xplanebeacon.h"
 #include "wxrdata.h"
 #include "check_aircraft.h"
-
+}
 
 extern int verbosity;
 int verbose;

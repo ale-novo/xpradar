@@ -5,7 +5,10 @@
 
 namespace ns
 {
+
+extern "C" {
 #include "serverdata.h"
+}
 
 using namespace std;
 
