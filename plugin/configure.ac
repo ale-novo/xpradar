@@ -79,9 +79,9 @@ fi
 AM_CONDITIONAL([XPL32], [test "x$use32bit" = xyes])
 
 # set installation prefix to current directory if none was given
-#if test "x$prefix" = xNONE; then
-#    prefix=`pwd`;
-#fi
+if test "x$prefix" = xNONE; then
+    prefix=`pwd`;
+fi
 
 AC_MSG_NOTICE([$PACKAGE_NAME will be installed in $prefix])
 
