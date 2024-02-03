@@ -21,7 +21,6 @@ cated airspeed in knots would be named m IndicatedAirspeedKnots if a class membe
 indicatedAirspeedKnots if a local function variable. Certain functions and classes may
 break this convention; for instance, the FSUIPC data source names raw values with a
 character preface.
-* Classes which are part should be prefaced with ogc, for instance ogcMyClass.
 
 ## Tabs and indentation
 
@@ -46,6 +45,6 @@ There are several main components and it’s important to understand what each d
 when designing a new gauge.
 
 * main.cpp - Although this file contains the main() function, very little actually occurs here.
-Several global objects are created, notably the primary executable object ogcAppObject.
+Several global objects are created, notably the primary executable object AppObject.
 After instantiating these objects, a rendering callback is established in FLTK and
 enters a rendering loop.

@@ -22,7 +22,7 @@ Version 0.77
 
 Version 0.76
 ------------
-- removed ogcNavRadioDataContainer.h
+- removed NavRadioDataContainer.h
 - removed all dependencies on FS/FG
 - removed all dependencies on airframecontainer etc.
 
