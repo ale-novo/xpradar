@@ -149,6 +149,8 @@ void read_wxr() {
       nrad = 1;
     } else {
       char *wxrBuffer;
+      // XP12
+      //wxrBufferLen = 5+24*MAXRADAR;
       wxrBufferLen = 5+13*MAXRADAR;
       nrad = MAXRADAR;
     }
@@ -178,6 +180,18 @@ void read_wxr() {
 	  
 	  //printf("%i %i %i \n",lon_deg_west,lat_deg_south,lat_min_south);
 	} else {
+	  /* XP12
+	    float cloud_base;
+	    float cloud_ratio;
+	    float precip_ratio;
+	    memcpy(&lon,&wxrBuffer[5+r*24+0],sizeof(lon));
+	    memcpy(&lat,&wxrBuffer[5+r*24+4],sizeof(lat));
+	    memcpy(&cloud_base,&wxrBuffer[5+r*24+8],sizeof(cloud_base));
+	    memcpy(&hgt,&wxrBuffer[5+r*24+12],sizeof(hgt));
+	    memcpy(&precip_ratio,&wxrBuffer[5+r*24+16],sizeof(precip_ratio));
+	    lev = (int) precip_ratio * 100.0;
+	  */
+
 	  memcpy(&lon,&wxrBuffer[5+r*13+0],sizeof(lon));
 	  memcpy(&lat,&wxrBuffer[5+r*13+4],sizeof(lat));
 	  memcpy(&lev,&wxrBuffer[5+r*13+8],sizeof(lev));
