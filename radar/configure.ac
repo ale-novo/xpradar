@@ -4,8 +4,10 @@
 AC_PREREQ([2.50])
 AC_INIT([xpradar], [0.82])
 
+
 AC_CONFIG_SRCDIR([src/main/main.cpp])
-AM_INIT_AUTOMAKE(foreign)
+AM_INIT_AUTOMAKE([1.16 foreign subdir-objects])
+
 AC_CONFIG_HEADERS([config.h])
 
 # Determine operating system

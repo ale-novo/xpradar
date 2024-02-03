@@ -5,8 +5,7 @@
 
 namespace ns
 {
-
-#include "../libxpcockpit/src/serverdata.h"
+#include "serverdata.h"
 
 using namespace std;
 
