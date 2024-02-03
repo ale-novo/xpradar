@@ -1,17 +1,5 @@
-
-/*-------------------------------------------------------------------------*/
-/**
-   @file    iniparser.c
-   @author  N. Devillard
-   @date    Sep 2007
-   @version 3.0
-   @brief   Parser for ini files.
-*/
-/*--------------------------------------------------------------------------*/
 /*
-    $Id: iniparser.c,v 2.18 2008-01-03 18:35:39 ndevilla Exp $
-    $Revision: 2.18 $
-    $Date: 2008-01-03 18:35:39 $
+   @brief   Parser for ini files.
 */
 /*---------------------------- Includes ------------------------------------*/
 #include <ctype.h>

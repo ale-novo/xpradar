@@ -17,12 +17,6 @@ RenderWindow
   if (verbosity > 0) printf("RenderWindow - constructing\n");
 
   m_Font = 0; 
-// Nothing of the following works... :
-// neither: m_Font = theApp->m_pFontManager->LoadFont((char*) "CockpitScreens.ttf");
-// nor:     m_Font = OpenGC::RenderObject::m_pFontManager->LoadFont((char*) "CockpitScreens.ttf");
-// nor:     m_Font = OpenGC::RenderObject::GetFontManager()->m_pFontManager->LoadFont((char*) "CockpitScreens.ttf");
-// cannot access m_pFontManager here - but that works in all GaugeComponents!?!
-
   // Set the window size in pixels to 0 start with
   m_WindowSize.x = 0;               
   m_WindowSize.y = 0;
