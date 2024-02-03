@@ -3,27 +3,27 @@ noinst_LIBRARIES = libOpenGCBase.a
 
 # Source file names
 libOpenGCBase_a_SOURCES = \
-ogcCircleEvaluator.cpp \
-ogcFLTKRenderWindow.cpp \
-ogcFont.cpp \
-ogcFontManager.cpp \
-ogcGauge.cpp \
-ogcGaugeComponent.cpp \
-ogcObject.cpp \
-ogcOrderedPair.cpp \
-ogcRenderObject.cpp \
-ogcRenderWindow.cpp
+CircleEvaluator.cpp \
+FLTKRenderWindow.cpp \
+Font.cpp \
+FontManager.cpp \
+Gauge.cpp \
+GaugeComponent.cpp \
+Object.cpp \
+OrderedPair.cpp \
+RenderObject.cpp \
+RenderWindow.cpp
 
 noinst_HEADERS = \
-ogcCircleEvaluator.h \
-ogcFLTKRenderWindow.h \
-ogcFont.h \
-ogcFontManager.h \
-ogcGLHeaders.h \
-ogcGauge.h \
-ogcGaugeComponent.h \
-ogcMessages.h \
-ogcObject.h \
-ogcOrderedPair.h \
-ogcRenderObject.h \
-ogcRenderWindow.h
+CircleEvaluator.h \
+FLTKRenderWindow.h \
+Font.h \
+FontManager.h \
+GLHeaders.h \
+Gauge.h \
+GaugeComponent.h \
+Messages.h \
+Object.h \
+OrderedPair.h \
+RenderObject.h \
+RenderWindow.h

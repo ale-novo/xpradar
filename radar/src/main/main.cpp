@@ -1,5 +1,5 @@
 /**
- * Responsible for creating *one* global ogcAppObject, invoking
+ * Responsible for creating *one* global AppObject, invoking
  * the app's Go() method, and cleaning up memory allocation
  * when FLTK kicks back by calling the CleanupApp() global
  * function. CleanupApp() is called either by the ANSI C
@@ -12,10 +12,10 @@
 #include <signal.h>
 #include <errno.h>
 #include <FL/Fl.H>
-#include "ogcObject.h"
-#include "ogcAppObject.h"
-#include "ogcDataSource.h"
-#include "ogcFontManager.h"
+#include "Object.h"
+#include "AppObject.h"
+#include "DataSource.h"
+#include "FontManager.h"
 
 // The level of debug information
 int verbosity; // 0: no debug, 1: some debug, 2: lots of debug

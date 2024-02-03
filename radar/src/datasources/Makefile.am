@@ -1,8 +1,8 @@
 noinst_LIBRARIES = libOpenGCDataSources.a
 
 libOpenGCDataSources_a_SOURCES = \
-ogcDataSource.cpp \
-ogcXPlaneDataSource.cpp \
+DataSource.cpp \
+XPlaneDataSource.cpp \
 serverdata.c \
 handleserver.c \
 handleudp.c \
@@ -10,8 +10,8 @@ udpdata.c \
 wxrdata.c
 
 noinst_HEADERS = \
-ogcDataSource.h \
-ogcXPlaneDataSource.h \
+DataSource.h \
+XPlaneDataSource.h \
 serverdata.h \
 handleserver.h \
 handleudp.h \

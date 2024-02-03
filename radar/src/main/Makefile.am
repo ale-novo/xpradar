@@ -5,12 +5,12 @@ bin_PROGRAMS = xpopengc
 xpopengc_SOURCES = \
 dictionary.c \
 iniparser.c \
-ogcAppObject.cpp \
+AppObject.cpp \
 main.cpp
 
 noinst_HEADERS = \
 dictionary.h \
 iniparser.h \
-ogcAppObject.h
+AppObject.h
 
 xpopengc_LDADD = ../gauges/libOpenGCGauges.a ../datasources/libOpenGCDataSources.a ../base/libOpenGCBase.a
