@@ -1,12 +1,12 @@
-#                                               -*- Autoconf -*-
+# Autoconf
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.50])
-AC_INIT([xpserver], [0.62], [Reto Stockli])
+AC_INIT([xpserver], [0.62])
 AC_CONFIG_SRCDIR([src/xpserver.c])
 
 # produce makefiles (turn on warnings on automake!)
-AM_INIT_AUTOMAKE([-Wall])
+AM_INIT_AUTOMAKE([foreign])
 
 # AM_CONFIG_HEADER does more than AC_CONFIG_HEADERS
 AM_CONFIG_HEADER([config.h])
@@ -40,7 +40,6 @@ esac
 AM_CONDITIONAL([OS_LIN], [test "x$os" = xlin])
 AM_CONDITIONAL([OS_MAC], [test "x$os" = xmac])
 AM_CONDITIONAL([OS_WIN], [test "x$os" = xwin])
-
 	
 # Debug compilation support
 AC_MSG_CHECKING([whether to build with debug information])
