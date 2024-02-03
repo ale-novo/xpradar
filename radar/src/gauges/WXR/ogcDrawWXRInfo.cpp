@@ -71,10 +71,10 @@ namespace OpenGC
       glPushMatrix();
 
       /* Plot Something in red on the upper left corner */
-      glColor3ub(255,0,0);
-      m_pFontManager->SetSize( m_Font, fontSize, fontSize );
-      snprintf(buffer, sizeof(buffer), "BLABLA");
-      m_pFontManager->Print(0.05*m_PhysicalSize.x, 0.9*m_PhysicalSize.y, &buffer[0], m_Font);
+      //glColor3ub(255,0,0);
+      //m_pFontManager->SetSize( m_Font, fontSize, fontSize );
+      //snprintf(buffer, sizeof(buffer), "BLABLA");
+      //m_pFontManager->Print(0.05*m_PhysicalSize.x, 0.9*m_PhysicalSize.y, &buffer[0], m_Font);
 
       /* Plot Heading in blue on the upper right corner */
       glColor3ub(100,100,255);
