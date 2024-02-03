@@ -1,5 +1,5 @@
 noinst_LIBRARIES = libRadarDataSources.a
-AM_CPPFLAGS += -I$(top_srcdir)/libxpcockpit/src
+AM_CPPFLAGS += -I$(top_srcdir)/libxpcockpit
 
 libRadarDataSources_a_SOURCES = \
 DataSource.cpp \
