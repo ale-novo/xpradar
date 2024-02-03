@@ -296,6 +296,7 @@ void receive_client(int clntSock) {
 		    }
 		  }
 		  free(datavf);
+		  datavf=NULL;
 		} else {
 		  if (verbose > 0) fprintf(logfileptr,"HANDLECLIENT: Client Socket %i : Received offset %i dataref %s not ready/writable. Discarding data. \n", clntSock, offset, clientdata[offset].datarefname);
 		}
@@ -328,6 +329,7 @@ void receive_client(int clntSock) {
 		    }
 		  }
 		  free(datavi);
+		  datavi=NULL;
 		} else {
 		  if (verbose > 0) fprintf(logfileptr,"HANDLECLIENT: Client Socket %i : Received offset %i dataref %s not ready/writable. Discarding data. \n",clntSock, offset, clientdata[offset].datarefname);
 		}
@@ -356,6 +358,7 @@ void receive_client(int clntSock) {
 		    }
 		  }
 		  free(datab);
+		  datab=NULL;
 		} else {
 		  if (verbose > 0) fprintf(logfileptr,"HANDLECLIENT: Client Socket %i : Received offset %i dataref %s not ready/writable. Discarding data. \n", clntSock, offset, clientdata[offset].datarefname);
 		}
@@ -750,6 +753,7 @@ void send_client(int clntSock) {
 		}
 	      }
 	      free(datavf);
+	      datavf=NULL;
 	      break;
 	    case XPTYPE_INT_ARR:
 	      datavi = malloc(nelements*sizeof(int));
@@ -795,6 +799,7 @@ void send_client(int clntSock) {
 		}
 	      }
 	      free(datavi);
+	      datavi=NULL;
 	      break;
 	    case XPTYPE_BYTE_ARR:
 	      datab = malloc(nelements*sizeof(unsigned char));
@@ -838,45 +843,48 @@ void send_client(int clntSock) {
 		}
 	      }
 	      free(datab);
+	      datab=NULL;
 	      break;
 	    case XPTYPE_CMD_ONCE:
-	      /* we need to report back that the command was executed
-		 and reset the command from 1 to 0. But in order to allow for
-		 state changes in other plugins we first set it to 2 and only to 0
-		 after the next callback so that our external plugins know
-		 that they can only execute another command after the command is
-		 back to 0. The state 2 is kept internally here. It is not
-		 sent to the client. */
-	      datai = *(int *) clientdata[i].data;
-	      if (datai == 2) {
-		 // second cycle: reset to 0
-		changed = 1;
-		datai = 0;
-		memcpy(clientdata[i].data,&datai,sizeof(int));
-	      }
-	      if (datai == 1) {
-		// first cycle: report 2
-		datai = 2; 
-		memcpy(clientdata[i].data,&datai,sizeof(int));
-	      }
-	      if (changed == 1) {
-		if ((send_left+3*sizeof(int)) <= TCPBUFSIZE) {
-		  first = MARK_DATA + i;
-		  memcpy(&sendBuffer[send_left],&first,sizeof(int));
-		  send_left += sizeof(int);
+	      // nothing to be sent back here since a one time command
+	      // OLD CODE DO NOT USE ANY MORE:
+	      /* /\* we need to report back that the command was executed */
+	      /* 	 and reset the command from 1 to 0. But in order to allow for */
+	      /* 	 state changes in other plugins we first set it to 2 and only to 0 */
+	      /* 	 after the next callback so that our external plugins know */
+	      /* 	 that they can only execute another command after the command is */
+	      /* 	 back to 0. The state 2 is kept internally here. It is not */
+	      /* 	 sent to the client. *\/ */
+	      /* datai = *(int *) clientdata[i].data; */
+	      /* if (datai == 2) { */
+	      /* 	 // second cycle: reset to 0 */
+	      /* 	changed = 1; */
+	      /* 	datai = 0; */
+	      /* 	memcpy(clientdata[i].data,&datai,sizeof(int)); */
+	      /* } */
+	      /* if (datai == 1) { */
+	      /* 	// first cycle: report 2 */
+	      /* 	datai = 2;  */
+	      /* 	memcpy(clientdata[i].data,&datai,sizeof(int)); */
+	      /* } */
+	      /* if (changed == 1) { */
+	      /* 	if ((send_left+3*sizeof(int)) <= TCPBUFSIZE) { */
+	      /* 	  first = MARK_DATA + i; */
+	      /* 	  memcpy(&sendBuffer[send_left],&first,sizeof(int)); */
+	      /* 	  send_left += sizeof(int); */
 		  
-		  memcpy(&sendBuffer[send_left],&datai,sizeof(int));
-		  memcpy(clientdata[i].data,&datai,sizeof(int));
-		  send_left += sizeof(int);
+	      /* 	  memcpy(&sendBuffer[send_left],&datai,sizeof(int)); */
+	      /* 	  memcpy(clientdata[i].data,&datai,sizeof(int)); */
+	      /* 	  send_left += sizeof(int); */
 		  
-		  if (verbose > 1) fprintf(logfileptr,"HANDLECLIENT: Client Socket %i : Sending data for offset %i commandref %s: %i \n", clntSock, i, clientdata[i].datarefname, datai);
-		} else {
-		  if (verbose > 0) fprintf(logfileptr,"HANDLECLIENT: Client Socket %i : TCP buffer overflow sending data for offset %i commandref %s \n",clntSock, i, clientdata[i].datarefname);
-		}
-	      }
+	      /* 	  if (verbose > 1) fprintf(logfileptr,"HANDLECLIENT: Client Socket %i : Sending data for offset %i commandref %s: %i \n", clntSock, i, clientdata[i].datarefname, datai); */
+	      /* 	} else { */
+	      /* 	  if (verbose > 0) fprintf(logfileptr,"HANDLECLIENT: Client Socket %i : TCP buffer overflow sending data for offset %i commandref %s \n",clntSock, i, clientdata[i].datarefname); */
+	      /* 	} */
+	      /* } */
 	      break;
 	    case XPTYPE_CMD_HOLD:
-	      // nothing to be done here since the user releases the button at some point
+	      // nothing to be sent back here since the user releases the button at some point
 	      break;
 	    default:
 	      break;

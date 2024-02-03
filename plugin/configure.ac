@@ -8,8 +8,7 @@ AC_CONFIG_SRCDIR([src/xpserver.c])
 # produce makefiles (turn on warnings on automake!)
 AM_INIT_AUTOMAKE([foreign])
 
-# AM_CONFIG_HEADER does more than AC_CONFIG_HEADERS
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs
 # AC_PROG_CC redefines CFLAGS, so save original CFLAGS and reapply them
@@ -80,9 +79,10 @@ fi
 AM_CONDITIONAL([XPL32], [test "x$use32bit" = xyes])
 
 # set installation prefix to current directory if none was given
-if test "x$prefix" = xNONE; then
-    prefix=`pwd`;
-fi
+#if test "x$prefix" = xNONE; then
+#    prefix=`pwd`;
+#fi
+
 AC_MSG_NOTICE([$PACKAGE_NAME will be installed in $prefix])
 
 # Checks for libraries.
