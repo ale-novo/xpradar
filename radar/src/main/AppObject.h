@@ -1,7 +1,7 @@
 /**
- * AppObject is the functional piece of the OpenGC example program.
+ * AppObject is the functional piece of the example program.
  * It is responsible for creating gauges and allocating/deallocating
- * the various objects used in OpenGC.
+ * the various objects used
  */
 
 #ifndef AppObject_h
@@ -15,7 +15,7 @@
 
 #define NFPS 10
 
-namespace OpenGC
+namespace ns
 {
 
 // This is so we don't have to use std:: for all of the fstream stuff
@@ -117,6 +117,6 @@ protected:
   
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

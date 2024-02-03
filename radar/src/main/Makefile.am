@@ -9,4 +9,4 @@ main.cpp
 noinst_HEADERS = \
 AppObject.h
 
-xpradar_LDADD = ../gauges/libOpenGCGauges.a ../datasources/libOpenGCDataSources.a ../base/libOpenGCBase.a
+xpradar_LDADD = ../gauges/libRadarGauges.a ../datasources/libRadarDataSources.a ../base/libRadarBase.a

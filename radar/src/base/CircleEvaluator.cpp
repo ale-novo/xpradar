@@ -3,7 +3,7 @@
 #include "GLHeaders.h"
 #include "CircleEvaluator.h"
 
-namespace OpenGC
+namespace ns
 {
 
 CircleEvaluator
@@ -143,4 +143,4 @@ CircleEvaluator
     }
   }
 
-} // end namespace OpenGC
+} // end namespace ns

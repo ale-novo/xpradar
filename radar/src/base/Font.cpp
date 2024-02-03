@@ -3,7 +3,7 @@
 
 #include "Font.h"
 
-namespace OpenGC
+namespace ns
 {
 
 Font
@@ -127,4 +127,4 @@ Font
   return true;
 }
 
-} // end namespace OpenGC
+} // end namespace ns

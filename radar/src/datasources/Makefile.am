@@ -1,6 +1,6 @@
-noinst_LIBRARIES = libOpenGCDataSources.a
+noinst_LIBRARIES = libRadarDataSources.a
 
-libOpenGCDataSources_a_SOURCES = \
+libRadarDataSources_a_SOURCES = \
 DataSource.cpp \
 XPlaneDataSource.cpp
 

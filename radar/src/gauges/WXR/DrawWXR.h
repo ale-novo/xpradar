@@ -4,7 +4,7 @@
 #include "Gauge.h"
 #include "WXR.h"
 
-namespace OpenGC
+namespace ns
 {
 
 class DrawWXR : public GaugeComponent
@@ -35,6 +35,6 @@ protected:
   
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

@@ -8,7 +8,7 @@
 #include "WXR.h"
 #include "DrawWXRInfo.h"
 
-namespace OpenGC
+namespace ns
 {
 
   DrawWXRInfo::DrawWXRInfo()
@@ -159,4 +159,4 @@ namespace OpenGC
       
   }
 
-} // end namespace OpenGC
+} // end namespace ns

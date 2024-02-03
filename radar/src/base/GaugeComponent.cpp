@@ -7,7 +7,7 @@
 
 extern int verbosity;
 
-namespace OpenGC
+namespace ns
 {
 
 GaugeComponent
@@ -118,4 +118,4 @@ GaugeComponent
   }
 }
 
-} // end namespace OpenGC
+} // end namespace ns

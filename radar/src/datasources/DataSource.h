@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace OpenGC
+namespace ns
 {
 
 extern "C" {
@@ -30,7 +30,7 @@ public:
   virtual bool Open();
 
   /** Called by the render window during idle processing
-    * This function is the one and only place where OpenGC
+    * This function is the one and only place where
     * should acquire data from the sim
     */
   virtual void OnIdle();
@@ -51,7 +51,7 @@ protected:
   
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif
 

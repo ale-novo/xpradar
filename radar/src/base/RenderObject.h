@@ -13,7 +13,7 @@
 #include "GLHeaders.h"
 #include "Messages.h"
 
-namespace OpenGC
+namespace ns
 {
 
 // Forward declaration of data source
@@ -120,6 +120,6 @@ protected:
   float m_FPS;
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

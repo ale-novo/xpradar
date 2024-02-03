@@ -9,7 +9,7 @@ is required to "sync" the data types contained in the packet
 
 #include <Gauge.h>
 
-namespace OpenGC
+namespace ns
 {
 
 class WXR : public Gauge  
@@ -40,6 +40,6 @@ public:
   
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

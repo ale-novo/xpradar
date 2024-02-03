@@ -1,25 +1,3 @@
-/*=========================================================================
-
-  OpenGC - The Open Source Glass Cockpit Project
-  Please see our web site at http://www.opengc.org
-  
-  Module:  $RCSfile: FontManager.h,v $
-
-  Last modification:
-    Date:      $Date: 2004/10/14 19:27:53 $
-    Version:   $Revision: 1.1.1.1 $
-    Author:    $Author: damion $
-  
-  Copyright (c) 2001-2003 Damion Shelton
-  All rights reserved.
-  See Copyright.txt or http://www.opengc.org/Copyright.htm for details.
-
-  This software is distributed WITHOUT ANY WARRANTY; without even 
-  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-  PURPOSE.  See the above copyright notice for more information.
-
-=========================================================================*/
-
 /**
  * FontManager allows sharing of fonts between different gauge
  * components; this is important so that memory-intensive fonts
@@ -40,7 +18,7 @@
 #include <vector> // STL vector include
 #include "Font.h"
 
-namespace OpenGC
+namespace ns
 {
 
 class FontManager  
@@ -102,6 +80,6 @@ protected:
   std::vector<Font*> m_FontList;
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif // !defined(FontMangager_h)

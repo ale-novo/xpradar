@@ -9,7 +9,7 @@
 
 extern int verbosity;
 
-namespace OpenGC
+namespace ns
 {
 
 RenderWindow
@@ -285,4 +285,4 @@ RenderWindow
   }
 }
 
-} // end namespace OpenGC
+} // end namespace ns

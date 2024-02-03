@@ -35,7 +35,7 @@ extern "C" {
 extern int verbosity;
 int verbose;
 
-namespace OpenGC
+namespace ns
 {
 
 extern FLTKRenderWindow* m_pRenderWindow;
@@ -142,4 +142,4 @@ void XPlaneDataSource::OnIdle()
   
 } // end "OnIdle()"
 
-} // end namespace OpenGC
+} // end namespace ns

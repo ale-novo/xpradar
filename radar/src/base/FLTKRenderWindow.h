@@ -1,5 +1,5 @@
 /**
- * FLTK implementation of the OpenGC render window
+ * FLTK implementation of the render window
  */
 
 #ifndef FLTKRenderWindow_h
@@ -8,7 +8,7 @@
 #include <FL/Fl_Gl_Window.H>
 #include "RenderWindow.h"
 
-namespace OpenGC
+namespace ns
 {
 
 class FLTKRenderWindow : public Fl_Gl_Window, public RenderWindow
@@ -31,6 +31,6 @@ public:
   void Render();
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

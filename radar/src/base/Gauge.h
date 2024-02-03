@@ -23,7 +23,7 @@
 #include "RenderObject.h"
 #include "GaugeComponent.h"
 
-namespace OpenGC
+namespace ns
 {
 
 class Gauge: public RenderObject
@@ -94,6 +94,6 @@ protected:
   float m_FPS;
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

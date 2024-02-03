@@ -11,7 +11,7 @@ extern "C" {
 #include "wxrdata.h"
 }
 
-namespace OpenGC
+namespace ns
 {
   
   DrawWXR::DrawWXR()
@@ -297,4 +297,4 @@ namespace OpenGC
     
   }
 
-} // end namespace OpenGC
+} // end namespace ns

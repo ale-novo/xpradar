@@ -9,7 +9,7 @@
 
 #include "OrderedPair.cpp"
 
-namespace OpenGC
+namespace ns
 {
 
 template<typename TDataType>
@@ -28,6 +28,6 @@ public:
   TDataType y;
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

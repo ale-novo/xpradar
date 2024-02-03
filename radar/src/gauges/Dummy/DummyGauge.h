@@ -7,7 +7,7 @@
 
 #include "Gauge.h"
 
-namespace OpenGC
+namespace ns
 {
 
 class DummyGauge : public Gauge  
@@ -21,6 +21,6 @@ public:
 
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

@@ -10,7 +10,7 @@
 
 extern int verbosity;
 
-namespace OpenGC
+namespace ns
 {
 
 Gauge
@@ -222,7 +222,7 @@ Gauge
     ComponentIteratorType it;
     for (it = m_GaugeComponentList.begin(); it != m_GaugeComponentList.end(); ++it)
     {
-      (*it)->OnOpenGCMessage(message, data);
+      (*it)->OnRadarMessage(message, data);
     }
   }
 }
@@ -242,4 +242,4 @@ Gauge
   glEnd();
 }
 
-} // end namespace OpenGC
+} // end namespace ns

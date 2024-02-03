@@ -29,7 +29,7 @@ extern int verbosity;
 
 extern "C" char clientname[100];
 
-namespace OpenGC
+namespace ns
 {
 
   AppObject::AppObject()
@@ -44,7 +44,7 @@ namespace OpenGC
 
     m_InitState = 0;
     
-    // Run a frame-rate test when loading OpenGC?
+    // Run a frame-rate test when loading
     m_FrameTest = false;
 
     /* reset frame rate */
@@ -59,7 +59,7 @@ namespace OpenGC
 
   AppObject::~AppObject()
   {
-    // The way OpenGC is laid out, the destructor for the App isn't actually called,
+    // The way is laid out, the destructor for the App isn't actually called,
     // but if it did, we'd want to do a little cleanup
     this->Cleanup();
   }
@@ -91,8 +91,8 @@ namespace OpenGC
 	snprintf (iniFile, sizeof(iniFile), "%s/../../inidata/%s.ini",programPath,iniFileName);
 	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../../fonts/",programPath);
       } else {
-	snprintf (iniFile, sizeof(iniFile), "%s/../share/xpopengc/%s.ini",programPath,iniFileName);
-	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../share/xpopengc/",programPath);
+	snprintf (iniFile, sizeof(iniFile), "%s/../share/xpradar/%s.ini",programPath,iniFileName);
+	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../share/xpradar/",programPath);
       }
     } else {
       /* assume we start from source or bin dir */
@@ -107,8 +107,8 @@ namespace OpenGC
 	snprintf (iniFile, sizeof(iniFile), "../../inidata/%s.ini", iniFileName);
 	snprintf (m_FontPath, sizeof(m_FontPath), "../../fonts/");
       } else {
-	snprintf (iniFile, sizeof(iniFile), "../share/xpopengc/%s.ini", iniFileName);
-	snprintf (m_FontPath, sizeof(m_FontPath), "../share/xpopengc/");
+	snprintf (iniFile, sizeof(iniFile), "../share/xpradar/%s.ini", iniFileName);
+	snprintf (m_FontPath, sizeof(m_FontPath), "../share/xpradar/");
       }
     }
 
@@ -207,7 +207,7 @@ namespace OpenGC
     int default_server_port = 8091;
     char default_data_source[] = "X-Plane";
     char default_xplane_path[] = "";
-    char default_client_name[] = "xpopengc";
+    char default_client_name[] = "xpradar";
     int default_customdata = 0; // do not read from X-Plane's "Custom Data" directory by default
     int default_radardata = 0; // do not read from X-Plane's UDP radar data by default
     char default_dem_path[] = "";
@@ -408,4 +408,4 @@ namespace OpenGC
     //printf("fps: %i \n",(int) round(fps));
   }
   
-} // end namespace OpenGC
+} // end namespace ns

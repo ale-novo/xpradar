@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace OpenGC
+namespace ns
 {
 
 using namespace std;
@@ -24,6 +24,6 @@ protected:
   
 };
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif

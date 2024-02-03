@@ -5,7 +5,7 @@
 
 extern int verbosity;
 
-namespace OpenGC
+namespace ns
 {
 
 FontManager
@@ -143,4 +143,4 @@ FontManager
   }
 }
 
-} // end namespace OpenGC
+} // end namespace ns

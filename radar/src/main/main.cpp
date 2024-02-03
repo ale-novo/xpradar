@@ -22,15 +22,15 @@
 int verbosity; // 0: no debug, 1: some debug, 2: lots of debug
 
 //-------Construct the one and only App Object-----
-OpenGC::AppObject theApp;
+ns::AppObject theApp;
 
 // The update rate for the app's idle function
 float appUpdateRate;
 
 //------------Static RenderObject members...-----------
-OpenGC::DataSource* OpenGC::RenderObject::m_pDataSource = 0;
-OpenGC::FontManager* OpenGC::RenderObject::m_pFontManager = 0;
-std::list<OpenGC::Object*>* OpenGC::Object::m_StaticObjectList = 0;
+ns::DataSource* ns::RenderObject::m_pDataSource = 0;
+ns::FontManager* ns::RenderObject::m_pFontManager = 0;
+std::list<ns::Object*>* ns::Object::m_StaticObjectList = 0;
 
 // Global idle function to handle app updates
 void GlobalIdle(void *)
@@ -42,16 +42,6 @@ void GlobalIdle(void *)
 /* this routine prints the GNU license information */
 void print_license(void)
 {
-  printf("OpenGC for X-Plane Copyright (C) 2009-2015 Reto Stockli\n");
-  printf("\n");
-  printf("Various additions and changes 2015 Hans Jansen\n");
-  printf("\n");
-  printf("This program comes with ABSOLUTELY NO WARRANTY\n");
-  printf("This is free software, and you are welcome to redistribute it\n");
-  printf("under the terms of the GNU General Public License as published by\n");
-  printf("the Free Software Foundation, either version 3 of the License, or\n");
-  printf("any later version. For details see http://www.gnu.org/licenses/gpl.html.\n");
-  printf("\n");
 }
 
 void signal_handler(int sigraised)
@@ -98,14 +88,14 @@ int main(int argc, char* argv[])
   //glEnable              ( GL_DEBUG_OUTPUT );
   //glDebugMessageCallback( MessageCallback, 0 );
   
-  printf ("=========== OpenGC - Starting up ==========\n");
+  printf ("=========== Starting up ==========\n");
     
   // Set the update rate in nominal seconds per frame
   if (argc == 1) {
     appUpdateRate = 1.0 / 50.0;
   } else {
     appUpdateRate = 1.0 / (float) atoi(argv[2]);
-    printf("Started OpenGC with an update rate of %f [1/s]\n",(float) atoi(argv[2]));
+    printf("Started with an update rate of %f [1/s]\n",(float) atoi(argv[2]));
   }
 
   // Register the idle function (which is a timeout to
@@ -115,7 +105,7 @@ int main(int argc, char* argv[])
   // Start up the application
   theApp.Go(argv[0],argv[1]);
 
-  printf ("=========== OpenGC  -  Finished  ==========\n");
+  printf ("=========== Finished  ==========\n");
   return 0;
 }
 

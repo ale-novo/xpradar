@@ -8,7 +8,7 @@
 #ifndef CircleEvaluator_h
 #define CircleEvaluator_h
 
-namespace OpenGC
+namespace ns
 {
 
 class CircleEvaluator  
@@ -62,6 +62,6 @@ protected:
   /* Function to draw a dashed line since in OpenGL ES the gl_line_stipple function is not available */
   void drawDashedLine(float x0, float y0, float x1, float y1, float nper100, float ratio);
 
-} // end namespace OpenGC
+} // end namespace ns
 
 #endif
