@@ -2,14 +2,16 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.50])
-AC_INIT([xpradar], [0.81])
+AC_INIT([xpradar], [0.82])
+
 AC_CONFIG_SRCDIR([src/main/main.cpp])
 AM_INIT_AUTOMAKE(foreign)
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 # Determine operating system
 AC_CANONICAL_HOST
 AC_MSG_CHECKING([operating system])
+
 case $host_os in
 linux*)
     os=lin
@@ -22,7 +24,7 @@ darwin*)
 mingw*)
     os=win
     AC_DEFINE([WIN],[1],[Define if Host Type is Windows])
-    LDFLAGS="$LDFLAGS -static"
+#    LDFLAGS="$LDFLAGS -static"
     LIBS="$LIBS -mconsole -mwindows -lws2_32 -lsetupapi -lole32 -luuid -lcomctl32"
     ;;
 **)
@@ -71,6 +73,7 @@ CFLAGS="$CFLAGS -fno-common"
 
 # Enable Threading support
 CXXFLAGS="$CXXFLAGS -pthread"
+CFLAGS="$CFLAGS -pthread"
 
 # Checks for libraries and headers.
 
@@ -185,7 +188,7 @@ to find headers in <directory>/include/freetype and libraries in <directory>/lib
                 [FREETYPEDIR=$with_freetype])
 if test -z "$FREETYPEDIR" ; then
     AC_MSG_RESULT([no])
-    CPPFLAGS="$CPPFLAGS -I/usr/include/freetype2" 
+    CPPFLAGS="$CPPFLAGS -I/usr/include/freetype2 -I/mingw64/include/freetype2" 
 else
     AC_MSG_RESULT([$FREETYPEDIR])
     LIBS="$LIBS -L$FREETYPEDIR/lib"
@@ -193,6 +196,15 @@ else
 fi
 
 AC_CHECK_LIB(z, main)
+#if test "x$os" = xwin; then
+#    AC_CHECK_LIB(bz2, main)
+#    AC_CHECK_LIB(brotlicommon, main)
+#    AC_CHECK_LIB(brotlidec, main)
+#    AC_CHECK_LIB(png, main)
+#    AC_CHECK_LIB(graphite2, main)
+#    AC_CHECK_LIB(harfbuzz, main)
+#fi
+
 AC_CHECK_LIB(freetype, main, , unset HAVE_FREETYPE)
 AC_CHECK_HEADER(ft2build.h, , unset HAVE_FREETYPE)
 #AC_CHECK_HEADER(freetype.h, , unset HAVE_FREETYPE,
@@ -248,6 +260,37 @@ AC_CHECK_FUNCS([bzero floor memset socket sqrt strcspn malloc])
 # Add local source code directories to include directives
 CPPFLAGS="$CPPFLAGS -I$PWD/src/base -I$PWD/src/datasources -I$PWD/src/gauges -I$PWD/src/main"
 
+
+
+HAVE_LIBXPCOCKPIT=yes
+AC_MSG_CHECKING([whether a location for the xpcockpit library was specified])
+AC_ARG_WITH([libxpcockpit],
+[AS_HELP_STRING([--with-libxpcockpit=<directory>],
+                [Specify location the xpcockpit library. Configure will expect
+to find headers in <directory>/include and libraries in <directory>/lib.])]
+,
+                [LIBXPCOCKPITDIR=$with_libxpcockpit])
+if test -z "$LIBXPCOCKPITDIR" ; then
+    AC_MSG_RESULT([no])
+    LIBS="$LIBS -L$ac_pwd/../libxpcockpit/lib"
+    CPPFLAGS="$CPPFLAGS -I$ac_pwd/../libxpcockpit/include"
+else
+    AC_MSG_RESULT([$LIBXPCOCKPITDIR])
+    LIBS="$LIBS -L$LIBXPCOCKPITDIR/lib"
+    CPPFLAGS="$CPPFLAGS -I$LIBXPCOCKPITDIR/include"
+fi
+
+AC_CHECK_HEADER([xplanebeacon.h],,unset HAVE_LIBXPCOCKPIT)
+AC_CHECK_LIB([xpcockpit],[initialize_beacon_client],,unset HAVE_LIBXPCOCKPIT)
+
+if test -z "$HAVE_LIBXPCOCKPIT"; then
+    AC_MSG_ERROR([Can't find xpcockpit library, or can't link a program to it.
+    Please compile (make) and install (make install) the library in the xpcockpit 
+    subdirectory libxpcockpit.
+    In case you have installed it in a custom location, use:
+    --with-libxpcockpit=<directory> to specify a custom installation directory.])
+fi
+
 # Substitute
 AC_SUBST(AM_CXXFLAGS)
 AC_SUBST(AM_CPPFLAGS)
@@ -256,7 +299,7 @@ AC_SUBST(AM_LDFLAGS)
 if test "x$prefix" = xNONE; then
     prefix=`pwd`;
 fi
-AC_MSG_NOTICE([will be installed in $prefix])
+AC_MSG_NOTICE([$PACKAGE_NAME will be installed in $prefix])
 
 # Define Packagename for CPP directive in C-based datasource code
 AC_DEFINE([XPRADAR],[],[CPP directive in C-based datasource code])

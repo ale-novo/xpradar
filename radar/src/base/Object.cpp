@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "Object.h"
 
-namespace xpradar
+namespace OpenGC
 {
 
 Object
@@ -10,7 +10,7 @@ Object
   if(m_StaticObjectList == 0)
     m_StaticObjectList = new std::list<Object*>;
     
-  // Add this object to the static list of all objects
+  // Add this object to the static list of all OpenGC objects
   m_StaticObjectList->push_back(this);
 }
 
@@ -32,24 +32,24 @@ Object
 
 void
 Object
-::DispatchXpradarMessage(Message message, void *data)
+::DispatchOpenGCMessage(Message message, void *data)
 {
-  // Dispatch the message to all objects
+  // Dispatch the message to all OpenGC objects
   ObjectIteratorType it;
   
   for (it = m_StaticObjectList->begin(); it != m_StaticObjectList->end(); ++it)
   {
-    (*it)->OnXpradarMessage(message, data);
+    (*it)->OnOpenGCMessage(message, data);
   }
 }
 
 // Called when a message is triggered somewhere
 void
 Object
-::OnXpradarMessage(Message message, void *data)
+::OnOpenGCMessage(Message message, void *data)
 {
   // The default version of this doesn't do anything
   // Overload to provide specific functionality
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

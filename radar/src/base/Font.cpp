@@ -3,7 +3,7 @@
 
 #include "Font.h"
 
-namespace xpradar
+namespace OpenGC
 {
 
 Font
@@ -127,4 +127,4 @@ Font
   return true;
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

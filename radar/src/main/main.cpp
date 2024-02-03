@@ -12,6 +12,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <FL/Fl.H>
+#include "GLHeaders.h"
 #include "Object.h"
 #include "AppObject.h"
 #include "DataSource.h"
@@ -21,15 +22,15 @@
 int verbosity; // 0: no debug, 1: some debug, 2: lots of debug
 
 //-------Construct the one and only App Object-----
-xpradar::AppObject theApp;
+OpenGC::AppObject theApp;
 
 // The update rate for the app's idle function
 float appUpdateRate;
 
 //------------Static RenderObject members...-----------
-xpradar::DataSource* xpradar::RenderObject::m_pDataSource = 0;
-xpradar::FontManager* xpradar::RenderObject::m_pFontManager = 0;
-std::list<xpradar::Object*>* xpradar::Object::m_StaticObjectList = 0;
+OpenGC::DataSource* OpenGC::RenderObject::m_pDataSource = 0;
+OpenGC::FontManager* OpenGC::RenderObject::m_pFontManager = 0;
+std::list<OpenGC::Object*>* OpenGC::Object::m_StaticObjectList = 0;
 
 // Global idle function to handle app updates
 void GlobalIdle(void *)
@@ -38,14 +39,45 @@ void GlobalIdle(void *)
   Fl::repeat_timeout(appUpdateRate, GlobalIdle);
 }
 
+/* this routine prints the GNU license information */
+void print_license(void)
+{
+  printf("OpenGC for X-Plane Copyright (C) 2009-2015 Reto Stockli\n");
+  printf("\n");
+  printf("Various additions and changes 2015 Hans Jansen\n");
+  printf("\n");
+  printf("This program comes with ABSOLUTELY NO WARRANTY\n");
+  printf("This is free software, and you are welcome to redistribute it\n");
+  printf("under the terms of the GNU General Public License as published by\n");
+  printf("the Free Software Foundation, either version 3 of the License, or\n");
+  printf("any later version. For details see http://www.gnu.org/licenses/gpl.html.\n");
+  printf("\n");
+}
+
 void signal_handler(int sigraised)
 {
   printf("Interrupted ... exiting \n");
   exit(0);
 }
 
+/*
+void GLAPIENTRY MessageCallback( GLenum source,
+				 GLenum type,
+				 GLuint id,
+				 GLenum severity,
+				 GLsizei length,
+				 const GLchar* message,
+				 const void* userParam )
+{
+   fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+	    }*/
+
 int main(int argc, char* argv[])
 {
+  /* print License terms */
+  print_license();
 
   /* evaluate command line arguments */
   argc--;
@@ -62,24 +94,28 @@ int main(int argc, char* argv[])
     printf("Could not establish new Termination signal handler.\n");
   }
 
-  printf ("=========== Starting up ===========\n");
+  // Enable OpenGL Debugging (or not)
+  //glEnable              ( GL_DEBUG_OUTPUT );
+  //glDebugMessageCallback( MessageCallback, 0 );
+  
+  printf ("=========== OpenGC - Starting up ==========\n");
     
   // Set the update rate in nominal seconds per frame
   if (argc == 1) {
     appUpdateRate = 1.0 / 50.0;
   } else {
     appUpdateRate = 1.0 / (float) atoi(argv[2]);
-    printf("Started with an update rate of %f [1/s]\n",(float) atoi(argv[2]));
+    printf("Started OpenGC with an update rate of %f [1/s]\n",(float) atoi(argv[2]));
   }
 
   // Register the idle function (which is a timeout to
   // avoid saturating the processor)
   Fl::add_timeout(appUpdateRate, GlobalIdle);
 
-  // Start up the OGC application
+  // Start up the application
   theApp.Go(argv[0],argv[1]);
 
-  printf ("=========== Finished ===========\n");
+  printf ("=========== OpenGC  -  Finished  ==========\n");
   return 0;
 }
 

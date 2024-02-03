@@ -1,20 +1,9 @@
-noinst_LIBRARIES = libXpradarDataSources.a
+noinst_LIBRARIES = libOpenGCDataSources.a
 
-libXpradarDataSources_a_SOURCES = \
+libOpenGCDataSources_a_SOURCES = \
 DataSource.cpp \
-XPlaneDataSource.cpp \
-serverdata.c \
-handleserver.c \
-handleudp.c \
-udpdata.c \
-wxrdata.c
+XPlaneDataSource.cpp
 
 noinst_HEADERS = \
 DataSource.h \
-XPlaneDataSource.h \
-serverdata.h \
-handleserver.h \
-handleudp.h \
-udpdata.h \
-common.h \
-wxrdata.h 
+XPlaneDataSource.h

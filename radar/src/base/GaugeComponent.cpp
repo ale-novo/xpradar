@@ -7,7 +7,7 @@
 
 extern int verbosity;
 
-namespace xpradar
+namespace OpenGC
 {
 
 GaugeComponent
@@ -118,4 +118,4 @@ GaugeComponent
   }
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

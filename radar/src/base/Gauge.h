@@ -23,7 +23,7 @@
 #include "RenderObject.h"
 #include "GaugeComponent.h"
 
-namespace xpradar
+namespace OpenGC
 {
 
 class Gauge: public RenderObject
@@ -52,6 +52,9 @@ public:
   void SetArg(int arg);
 
   int GetArg() { return m_Arg; }
+ 
+  float GetFPS() { return m_FPS; }
+  void SetFPS(float fps) { m_FPS = fps; }
  
   /** Recalculates placement of the gauge in the window */
   void RecalcWindowPlacement();
@@ -86,8 +89,11 @@ protected:
 
   /** Whether or not to draw a blue line around the gauge */
   bool m_DrawGaugeOutline;
+
+  /** frame rate per second */
+  float m_FPS;
 };
 
-} // end namespace xpradar
+} // end namespace OpenGC
 
 #endif

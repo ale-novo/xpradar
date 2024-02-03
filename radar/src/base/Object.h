@@ -1,5 +1,5 @@
 /**
- * The base class for any object in the world that can send
+ * The base class for any object in the OpenGC world that can send
  * and receive messages
  */
 
@@ -9,7 +9,7 @@
 #include <list>
 #include "Messages.h"
 
-namespace xpradar
+namespace OpenGC
 {
 
 class Object
@@ -20,20 +20,20 @@ public:
   virtual ~Object();
 
   /** Called when a message is triggered somewhere */
-  void OnXpradarMessage(Message message, void *data);
+  void OnOpenGCMessage(Message message, void *data);
 
-  /** Send a message to all objects */
-  void DispatchXpradarMessage(Message message, void *data);
+  /** Send a message to all OpenGC objects */
+  void DispatchOpenGCMessage(Message message, void *data);
 
 private:
   
-  /** List of all objects in the world, used for global message passing */
+  /** List of all objects in the OpenGC world, used for global message passing */
   static std::list<Object*>* m_StaticObjectList;
   
-  /** Iterator type for accessing the list of objects */
+  /** Iterator type for accessing the list of OpenGC objects */
   typedef std::list<Object*>::iterator ObjectIteratorType;
 };
 
-} // end namespace xpradar
+} // end namespace OpenGC
 
 #endif

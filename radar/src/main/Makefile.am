@@ -2,15 +2,11 @@
 bin_PROGRAMS = xpradar
 
 # Source file names
-xpradar_SOURCES = \
-dictionary.c \
-iniparser.c \
+xpopengc_SOURCES = \
 AppObject.cpp \
 main.cpp
 
 noinst_HEADERS = \
-dictionary.h \
-iniparser.h \
 AppObject.h
 
-xpradar_LDADD = ../gauges/libXpradarGauges.a ../datasources/libXpradarDataSources.a ../base/libXpradarBase.a
+xpopengc_LDADD = ../gauges/libOpenGCGauges.a ../datasources/libOpenGCDataSources.a ../base/libOpenGCBase.a

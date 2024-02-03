@@ -1,16 +1,14 @@
 #ifndef DataSource_h
 #define DataSource_h
 
-// #include "AirframeDataContainer.h"
 #include <string>
+
+namespace OpenGC
+{
 
 extern "C" {
 #include "serverdata.h"
-#include "udpdata.h"
 }
-
-namespace xpradar
-{
 
 using namespace std;
 
@@ -32,7 +30,7 @@ public:
   virtual bool Open();
 
   /** Called by the render window during idle processing
-    * This function is the one and only place where it
+    * This function is the one and only place where OpenGC
     * should acquire data from the sim
     */
   virtual void OnIdle();
@@ -53,7 +51,7 @@ protected:
   
 };
 
-} // end namespace xpradar
+} // end namespace OpenGC
 
 #endif
 

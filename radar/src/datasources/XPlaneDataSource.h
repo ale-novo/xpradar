@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace xpradar
+namespace OpenGC
 {
 
 using namespace std;
@@ -24,6 +24,6 @@ protected:
   
 };
 
-} // end namespace xpradar
+} // end namespace OpenGC
 
 #endif

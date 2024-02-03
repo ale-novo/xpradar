@@ -1,6 +1,6 @@
 /**
  * GaugeComponents are the most "primitive" building block in the
- * design scheme. Gauges are composed of a number of
+ * OpenGC design scheme. Gauges are composed of a number of
  * GaugeComponents, each of which is capable of positioning and
  * drawing itself.
  *
@@ -16,7 +16,7 @@
 #include "OrderedPair.h"
 #include "RenderObject.h"
 
-namespace xpradar
+namespace OpenGC
 {
 
 class GaugeComponent: public RenderObject
@@ -37,7 +37,7 @@ public:
   bool ClickTest(int button, int state, int x, int y);
 };
 
-} // end namespace xpradar
+} // end namespace OpenGC
 
 #endif
 

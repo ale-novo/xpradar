@@ -1,6 +1,6 @@
 /**
  * Wraps the FTGL font toolkit to make its interface fit well into the
- * environment. Font's are accessed via the FontManager object,
+ * OpenGC environment. Font's are accessed via the FontManager object,
  * which all RenderObject's contain a pointer to (thereby eliminating
  * redundant font storage).
 
@@ -19,7 +19,7 @@
 
 #include <FTGL/ftgl.h>
 
-namespace xpradar
+namespace OpenGC
 {
 
 class Font
@@ -77,6 +77,6 @@ protected:
 
 };
 
-} // end namespace xpradar
+} // end namespace OpenGC
 
 #endif // !defined(Font_h)

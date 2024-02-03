@@ -9,9 +9,8 @@
 #include "Gauge.h"
 
 extern int verbosity;
-//extern bool m_FrameTest; // how do we find that variable?
 
-namespace xpradar
+namespace OpenGC
 {
 
 Gauge
@@ -223,7 +222,7 @@ Gauge
     ComponentIteratorType it;
     for (it = m_GaugeComponentList.begin(); it != m_GaugeComponentList.end(); ++it)
     {
-      (*it)->OnXpradarMessage(message, data);
+      (*it)->OnOpenGCMessage(message, data);
     }
   }
 }
@@ -243,4 +242,4 @@ Gauge
   glEnd();
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

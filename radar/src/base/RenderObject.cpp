@@ -4,7 +4,7 @@
 
 extern int verbosity;
 
-namespace xpradar
+namespace OpenGC
 {
 
 RenderObject
@@ -120,4 +120,4 @@ RenderObject
   // Overload to provide specific functionality
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

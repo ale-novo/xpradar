@@ -1,6 +1,6 @@
 #include "Dummy/DummyGauge.h"
 
-namespace xpradar
+namespace OpenGC
 {
 
 DummyGauge::DummyGauge()
@@ -10,12 +10,12 @@ DummyGauge::DummyGauge()
 
 DummyGauge::~DummyGauge()
 {
-  // Destruction handled by base class
+// Destruction handled by base class
 }
 
 void DummyGauge::Render()
 {
-	// Rendering the dummy class does nothing
+// Rendering the dummy class does nothing
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

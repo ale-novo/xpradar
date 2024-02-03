@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 #include <stdio.h>
+#include <sys/time.h>
+#include <math.h>
 
 //--------GL Stuff---------
 #include "GLHeaders.h"
@@ -16,6 +18,10 @@ extern "C" {
 #include "AppObject.h"
 #include "RenderObject.h"
 
+//--------Data Sources---------
+// Not all data sources work on all platforms,
+// but in the worst case all will at least default
+// to a basic data source
 #include "XPlaneDataSource.h"
 
 //-----------Gauges------------
@@ -26,12 +32,12 @@ extern int verbosity;
 
 extern "C" char clientname[100];
 
-namespace xpradar
+namespace OpenGC
 {
 
   AppObject::AppObject()
   {
-    printf("AppObject - constructing\n");
+    /*if (verbosity > 0)*/ printf("AppObject - constructing\n");
   
     // Make sure all the pointers are nulled out
     m_pFontManager = 0;
@@ -41,15 +47,22 @@ namespace xpradar
 
     m_InitState = 0;
     
-    // Run a frame-rate test when loading
+    // Run a frame-rate test when loading OpenGC?
     m_FrameTest = false;
+
+    /* reset frame rate */
+    for (int i=0;i<NFPS;i++) {
+      m_FPSArray[i] = FLT_MISS;
+    }
+    m_FPS = FLT_MISS;
+    m_FPSIndex = 0;
 
     /*if (verbosity > 1)*/ printf("AppObject - constructed\n");
   }
 
   AppObject::~AppObject()
   {
-    // The way is laid out, the destructor for the App isn't actually called,
+    // The way OpenGC is laid out, the destructor for the App isn't actually called,
     // but if it did, we'd want to do a little cleanup
     this->Cleanup();
   }
@@ -81,8 +94,8 @@ namespace xpradar
 	snprintf (iniFile, sizeof(iniFile), "%s/../../inidata/%s.ini",programPath,iniFileName);
 	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../../fonts/",programPath);
       } else {
-	snprintf (iniFile, sizeof(iniFile), "%s/../share/xpradar/%s.ini",programPath,iniFileName);
-	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../share/xpradar/",programPath);
+	snprintf (iniFile, sizeof(iniFile), "%s/../share/xpopengc/%s.ini",programPath,iniFileName);
+	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../share/xpopengc/",programPath);
       }
     } else {
       /* assume we start from source or bin dir */
@@ -97,8 +110,8 @@ namespace xpradar
 	snprintf (iniFile, sizeof(iniFile), "../../inidata/%s.ini", iniFileName);
 	snprintf (m_FontPath, sizeof(m_FontPath), "../../fonts/");
       } else {
-	snprintf (iniFile, sizeof(iniFile), "../share/xpradar/%s.ini", iniFileName);
-	snprintf (m_FontPath, sizeof(m_FontPath), "../share/xpradar/");
+	snprintf (iniFile, sizeof(iniFile), "../share/xpopengc/%s.ini", iniFileName);
+	snprintf (m_FontPath, sizeof(m_FontPath), "../share/xpopengc/");
       }
     }
 
@@ -112,10 +125,6 @@ namespace xpradar
     if (verbosity > 0) printf ("====================\n");
 
     m_InitState = 1;
-  
-    // First, check the frame rate if the user wants to
-    if(m_FrameTest)
-      this->CheckFrameRate();
 
     // Now it's time to enter the event loop
     Fl::run();
@@ -128,15 +137,27 @@ namespace xpradar
   AppObject
   ::IdleFunction()
   {
-    
+
+    // Check the frame rate if the user wants to
+    if(m_FrameTest) {
+      this->CheckFrameRate();
+      m_pRenderWindow->SetFPS(m_FPS);
+    }
+     
     // Every time we loop we grab some new data and re-render the window
+    // Only render if things have changed from X-Plane or during init, so
+    // all datarefs have been safely received
     m_pDataSource->OnIdle();
-    if ((numreceived > 0) || (m_InitState <= 1) || (wxr_newdata == 1)) {
-      //printf("%i %i \n",numreceived,m_InitState);
+    //printf("%i \n",numreceived);
+    if ((numreceived > 0) || (m_InitState <= 100) ||
+	(wxr_newdata == 1) || (m_FrameTest)) {
+  
+       //printf("%i %i \n",numreceived,m_InitState);
       m_pRenderWindow->redraw();
+    
       Fl::flush();
     }
-    if (m_InitState == 1) m_InitState++;
+    if (m_InitState <= 100) m_InitState++;
   }
 
   bool AppObject::IntermediateInitialization()
@@ -153,37 +174,31 @@ namespace xpradar
 
   void AppObject::Cleanup()
   {  
-    if (verbosity > 0) cout << "AppObject - Cleaning up\n";
-  
-    if(m_pDataSource != 0)
-      {
-	if (verbosity > 1) cout << "AppObject - Deleting Data Source\n";
-	delete m_pDataSource;
-	m_pDataSource = 0;
-      }
-  
+    if (verbosity > 0) printf("AppObject - Cleaning up\n");
+
+
     if(m_pRenderWindow != 0)
       {
-	if (verbosity > 1) cout << "AppObject - Deleting render window\n";
+	if (verbosity > 1) printf("AppObject - Deleting render window\n");
 	delete m_pRenderWindow;
 	m_pRenderWindow = 0;
+      }
+ 
+    if (m_pDataSource != 0)
+      {
+	if (verbosity > 1) printf("AppObject - Deleting data source\n");
+	delete m_pDataSource;
+	m_pDataSource = 0;
       }
   
     if(m_pFontManager != 0)
       {
-	if (verbosity > 1) cout << "AppObject - Deleting font manager\n";
+	if (verbosity > 1) printf("AppObject - Deleting font manager\n");
 	delete m_pFontManager;
 	m_pFontManager = 0;
       }
-  
-    if (m_pDataSource != 0)
-      {
-	if (verbosity > 1) cout << "AppObject - Deleting data source\n";
-	delete m_pDataSource;
-	m_pDataSource = 0;
-      }
-  
-    if (verbosity > 1) cout << "AppObject - Finished memory cleanup\n";
+   
+    if (verbosity > 1) printf("AppObject - Finished memory cleanup\n");
   }
 
   bool AppObject::DoFileInitialization(char* iniFile)
@@ -191,11 +206,11 @@ namespace xpradar
     char temp_string[50];
     dictionary *ini;
     int default_verbosity = 0;
-    char default_server_ip[] = "127.0.0.1";
+    char default_server_ip[] = "";
     int default_server_port = 8091;
     char default_data_source[] = "X-Plane";
     char default_xplane_path[] = "";
-    char default_client_name[] = "xpradar";
+    char default_client_name[] = "xpopengc";
     int default_customdata = 0; // do not read from X-Plane's "Custom Data" directory by default
     int default_radardata = 0; // do not read from X-Plane's UDP radar data by default
     char default_dem_path[] = "";
@@ -242,7 +257,7 @@ namespace xpradar
     
       if (verbosity > 0) printf("AppObject - Font path %s\n", m_FontPath);
       m_pFontManager->SetFontPath(m_FontPath);
-    
+     
       // Set up the network data
       strcpy(m_ip_address,iniparser_getstring(ini,"network:ServerIP", default_server_ip));
       m_port = iniparser_getint(ini,"network:ServerPort", default_server_port);
@@ -267,7 +282,7 @@ namespace xpradar
       if (verbosity > 1) printf("AppObject - ready to create render window\n");
 
       // Create the new render window
-      m_pRenderWindow = new FLTKRenderWindow(initX, initY, width, height, "XPRADAR");
+      m_pRenderWindow = new FLTKRenderWindow(initX, initY, width, height, "The Open Glass Cockpit Project");
       m_pRenderWindow->resizable(m_pRenderWindow);
       m_pRenderWindow->mode(FL_RGB | FL_DOUBLE | FL_MULTISAMPLE);
       //m_pRenderWindow->mode(FL_RGB | FL_MULTISAMPLE);
@@ -350,7 +365,35 @@ namespace xpradar
 
     if (verbosity > 0) printf ("AppObject - Gauge %s, xp %f, yp %f, xs %f, ys %f, (arg %i)\n", name, xPos, yPos, xScale, yScale, arg);
 
-    if (strcmp(name, "WXR")==0) pGauge = new WXR();
+    if (strcmp(name, "BasicClock")==0) pGauge = new BasicClock();
+    else if (strcmp(name, "WXR")==0) pGauge = new WXR();
+    else if (strcmp(name, "B737PFD")==0) pGauge = new B737PFD();
+    else if (strcmp(name, "B737PFDSA")==0) pGauge = new B737PFDSA();
+    else if (strcmp(name, "B737EICAS")==0) pGauge = new B737EICAS();
+    else if (strcmp(name, "B737NAV")==0) pGauge = new B737NAV();
+    else if (strcmp(name, "B737FMC")==0) pGauge = new B737FMC(arg);
+    else if (strcmp(name, "B737MIP")==0) pGauge = new B737MIP();
+    else if (strcmp(name, "B737CLOCK")==0) pGauge = new B737Clock();
+    else if (strcmp(name, "B737ISFD")==0) pGauge = new B737ISFD();
+    else if (strcmp(name, "B737RMI")==0) pGauge = new B737RMI();
+    /*
+      else if (strcmp(name, "B737AnalogFlaps")==0) pGauge = new B737AnalogFlaps();
+      else if (strcmp(name, "B737VerticalSpeedDigital")==0) pGauge = new B737VerticalSpeedDigital();
+      else if (strcmp(name, "Keypad")==0) pGauge = new Keypad();
+      else if (strcmp(name, "NavTestGauge")==0) pGauge = new NavTestGauge();
+    */
+    else if (strcmp(name, "A320PFD")==0) pGauge = new A320PFD();
+    else if (strcmp(name, "A320ND")==0) pGauge = new A320ND();
+    else if (strcmp(name, "A320EWD")==0) pGauge = new A320EWD();
+    else if (strcmp(name, "A320SD")==0) pGauge = new A320SD();
+    else if (strcmp(name, "A320MCDU")==0) pGauge = new A320MCDU();
+    else if (strcmp(name, "A320Clock")==0) pGauge = new A320Clock();
+    else if (strcmp(name, "A320BrkTripleInd")==0) pGauge = new A320BrkTripleInd();
+    else if (strcmp(name, "A320StbyAlt")==0) pGauge = new A320StbyAlt();
+    else if (strcmp(name, "A320StbyASI")==0) pGauge = new A320StbyASI();
+    else if (strcmp(name, "A320StbyAtt")==0) pGauge = new A320StbyAtt();
+    else if (strcmp(name, "A320StbyISIS")==0) pGauge = new A320StbyISIS();
+    else if (strcmp(name, "A320StbyRMI")==0) pGauge = new A320StbyRMI();
     else {
       printf("Gauge %s not defined in CreateGauge. Aborting\n",name);
       exit(-1);
@@ -359,11 +402,41 @@ namespace xpradar
     pGauge->SetPosition(xPos, yPos);
     pGauge->SetScale(xScale, yScale);
     pGauge->SetArg(arg);
+    pGauge->SetFPS(FLT_MISS);
     m_pRenderWindow->AddGauge(pGauge);
   }
 
+// calculate frame rate from timing and with running mean function
   void AppObject::CheckFrameRate()
   {
+
+    float fps;
+
+    fps = m_FPSArray[m_FPSIndex];
+
+    /* evaluate timer */
+    if (fps == FLT_MISS) {
+      fps = 0.0; // temporary value
+      gettimeofday(&m_start,NULL); // start count
+    } else {
+      gettimeofday(&m_end,NULL); // end count
+      fps = 1./(m_end.tv_sec - m_start.tv_sec + (m_end.tv_usec - m_start.tv_usec)/1000000.0);
+      gettimeofday(&m_start,NULL); // start count
+      
+    }
+
+    m_FPSArray[m_FPSIndex] = fps;
+    m_FPSIndex += 1;
+    if (m_FPSIndex == NFPS) m_FPSIndex = 0;
+
+    /* store running mean of fps */
+    fps = 0.0;
+    for (int i=0;i<NFPS;i++) {
+      fps += m_FPSArray[i];
+    }
+    fps /= (float) NFPS;
+    m_FPS = fps;
+    //printf("fps: %i \n",(int) round(fps));
   }
   
-} // end namespace xpradar
+} // end namespace OpenGC

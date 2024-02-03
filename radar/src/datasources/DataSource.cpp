@@ -1,7 +1,7 @@
 #include "DataSource.h"
 #include <stdio.h>
 
-namespace xpradar
+namespace OpenGC
 {
 
 DataSource::DataSource()
@@ -42,4 +42,4 @@ bool DataSource::Open()
   return false;
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

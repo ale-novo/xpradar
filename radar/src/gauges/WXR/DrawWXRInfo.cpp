@@ -8,7 +8,7 @@
 #include "WXR.h"
 #include "DrawWXRInfo.h"
 
-namespace xpradar
+namespace OpenGC
 {
 
   DrawWXRInfo::DrawWXRInfo()
@@ -47,7 +47,7 @@ namespace xpradar
     float map_size = m_PhysicalSize.y*(map_y_max-acf_y);
     
     // What's the heading?
-    float *heading_mag = link_dataref_flt("sim/flightmodel/position/magpsi",-1);
+    float *heading_mag = link_dataref_flt("sim/flightmodel/position/mag_psi",-1);
     float *magnetic_variation = link_dataref_flt("sim/flightmodel/position/magnetic_variation",-1);
 
     if ((heading_map != FLT_MISS) && (*magnetic_variation != FLT_MISS)) {
@@ -56,10 +56,10 @@ namespace xpradar
       glPushMatrix();
 
       /* Plot Something in red on the upper left corner */
-      //glColor3ub(255,0,0);
-      //m_pFontManager->SetSize( m_Font, fontSize, fontSize );
-      //snprintf(buffer, sizeof(buffer), "BLABLA");
-      //m_pFontManager->Print(0.05*m_PhysicalSize.x, 0.9*m_PhysicalSize.y, &buffer[0], m_Font);
+      glColor3ub(255,0,0);
+      m_pFontManager->SetSize( m_Font, fontSize, fontSize );
+      snprintf(buffer, sizeof(buffer), "BLABLA");
+      m_pFontManager->Print(0.05*m_PhysicalSize.x, 0.9*m_PhysicalSize.y, &buffer[0], m_Font);
 
       /* Plot Heading in blue on the upper right corner */
       glColor3ub(100,100,255);
@@ -159,4 +159,4 @@ namespace xpradar
       
   }
 
-} // end namespace xpradar
+} // end namespace OpenGC

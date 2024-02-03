@@ -6,9 +6,10 @@
 #include "Gauge.h"
 #include "RenderWindow.h"
 
+
 extern int verbosity;
 
-namespace xpradar
+namespace OpenGC
 {
 
 RenderWindow
@@ -16,7 +17,6 @@ RenderWindow
 {
   if (verbosity > 0) printf("RenderWindow - constructing\n");
 
-  m_Font = 0; 
   // Set the window size in pixels to 0 start with
   m_WindowSize.x = 0;               
   m_WindowSize.y = 0;
@@ -55,36 +55,13 @@ RenderWindow
   GaugeIteratorType it;
 
   // If there are gauges, delete them
+  
   if( !m_NumGauges==0 )
   {    
     for (it = m_GaugeList.begin(); it != m_GaugeList.end(); ++it)
     {
       delete (*it);
     }
-  }
-}
-
-  int frCnt = 0; time_t oldTime = 0, newTime = 0; long diffTime; char buffer[6];
-
-// Shows the frame rate at top-left of window
-void
-RenderWindow
-::ShowFrameRate()
-{
-  // Increment the frame counter
-  frCnt++;
-  newTime = time(NULL);
-  if (frCnt == 100) {
-    frCnt = 0;
-    diffTime = difftime(newTime, oldTime);
-    oldTime = newTime;
-printf("frame rate: %i\n", (int) (100.0/diffTime));
-/*
-// Note: can't find m_pFontManager!
-    theApp->m_pFontManager->SetSize(m_Font, 10, 12);
-    snprintf( buffer, sizeof(buffer), "%i", (int) (100.0/diffTime));
-    theApp->m_pFontManager->Print(0, -12, &buffer[0], m_Font);
-*/
   }
 }
 
@@ -157,12 +134,9 @@ RenderWindow
 //  glLoadIdentity();
 
   // Draw all of the gauges
-//  glPushMatrix();	// hj ?
+  //glPushMatrix();	// hj ?
   this->RenderGauges();
-//  glPopMatrix();	// hj ?
-
-//  if(m_FrameTest) // NOTE: m_FrameTest not known outside AppObject.cpp!
-//    this->ShowFrameRate();
+  //glPopMatrix();	// hj ?
 
   // Clean up the rendering
   glFlush();
@@ -178,6 +152,19 @@ RenderWindow
   for (it = m_GaugeList.begin(); it != m_GaugeList.end(); ++it)
   {
     (*it)->Render();
+  }
+}
+
+void
+RenderWindow
+::SetFPS(float fps)
+{
+  GaugeIteratorType it;
+
+  // Walk the list of gauges and update FPS
+  for (it = m_GaugeList.begin(); it != m_GaugeList.end(); ++it)
+  {
+    (*it)->SetFPS(fps);
   }
 }
 
@@ -298,4 +285,4 @@ RenderWindow
   }
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

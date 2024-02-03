@@ -5,7 +5,7 @@
 
 extern int verbosity;
 
-namespace xpradar
+namespace OpenGC
 {
 
 FontManager
@@ -143,4 +143,4 @@ FontManager
   }
 }
 
-} // end namespace xpradar
+} // end namespace OpenGC

@@ -1,8 +1,8 @@
 # Library name
-noinst_LIBRARIES = libXpradarGauges.a
+noinst_LIBRARIES = libOpenGCGauges.a
 
 # Source file names
-libXpradarGauges_a_SOURCES = \
+libOpenGCGauges_a_SOURCES = \
 WXR/WXR.cpp \
 WXR/DrawWXR.cpp \
 WXR/DrawWXRInfo.cpp \
