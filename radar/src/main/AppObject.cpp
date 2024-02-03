@@ -19,9 +19,6 @@ extern "C" {
 #include "RenderObject.h"
 
 //--------Data Sources---------
-// Not all data sources work on all platforms,
-// but in the worst case all will at least default
-// to a basic data source
 #include "XPlaneDataSource.h"
 
 //-----------Gauges------------
@@ -365,35 +362,7 @@ namespace OpenGC
 
     if (verbosity > 0) printf ("AppObject - Gauge %s, xp %f, yp %f, xs %f, ys %f, (arg %i)\n", name, xPos, yPos, xScale, yScale, arg);
 
-    if (strcmp(name, "BasicClock")==0) pGauge = new BasicClock();
-    else if (strcmp(name, "WXR")==0) pGauge = new WXR();
-    else if (strcmp(name, "B737PFD")==0) pGauge = new B737PFD();
-    else if (strcmp(name, "B737PFDSA")==0) pGauge = new B737PFDSA();
-    else if (strcmp(name, "B737EICAS")==0) pGauge = new B737EICAS();
-    else if (strcmp(name, "B737NAV")==0) pGauge = new B737NAV();
-    else if (strcmp(name, "B737FMC")==0) pGauge = new B737FMC(arg);
-    else if (strcmp(name, "B737MIP")==0) pGauge = new B737MIP();
-    else if (strcmp(name, "B737CLOCK")==0) pGauge = new B737Clock();
-    else if (strcmp(name, "B737ISFD")==0) pGauge = new B737ISFD();
-    else if (strcmp(name, "B737RMI")==0) pGauge = new B737RMI();
-    /*
-      else if (strcmp(name, "B737AnalogFlaps")==0) pGauge = new B737AnalogFlaps();
-      else if (strcmp(name, "B737VerticalSpeedDigital")==0) pGauge = new B737VerticalSpeedDigital();
-      else if (strcmp(name, "Keypad")==0) pGauge = new Keypad();
-      else if (strcmp(name, "NavTestGauge")==0) pGauge = new NavTestGauge();
-    */
-    else if (strcmp(name, "A320PFD")==0) pGauge = new A320PFD();
-    else if (strcmp(name, "A320ND")==0) pGauge = new A320ND();
-    else if (strcmp(name, "A320EWD")==0) pGauge = new A320EWD();
-    else if (strcmp(name, "A320SD")==0) pGauge = new A320SD();
-    else if (strcmp(name, "A320MCDU")==0) pGauge = new A320MCDU();
-    else if (strcmp(name, "A320Clock")==0) pGauge = new A320Clock();
-    else if (strcmp(name, "A320BrkTripleInd")==0) pGauge = new A320BrkTripleInd();
-    else if (strcmp(name, "A320StbyAlt")==0) pGauge = new A320StbyAlt();
-    else if (strcmp(name, "A320StbyASI")==0) pGauge = new A320StbyASI();
-    else if (strcmp(name, "A320StbyAtt")==0) pGauge = new A320StbyAtt();
-    else if (strcmp(name, "A320StbyISIS")==0) pGauge = new A320StbyISIS();
-    else if (strcmp(name, "A320StbyRMI")==0) pGauge = new A320StbyRMI();
+    if (strcmp(name, "WXR")==0) pGauge = new WXR();
     else {
       printf("Gauge %s not defined in CreateGauge. Aborting\n",name);
       exit(-1);
