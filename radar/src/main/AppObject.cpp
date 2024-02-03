@@ -267,7 +267,7 @@ namespace xpradar
       if (verbosity > 1) printf("AppObject - ready to create render window\n");
 
       // Create the new render window
-      m_pRenderWindow = new FLTKRenderWindow(initX, initY, width, height, "XPRadar");
+      m_pRenderWindow = new FLTKRenderWindow(initX, initY, width, height, "XPRADAR");
       m_pRenderWindow->resizable(m_pRenderWindow);
       m_pRenderWindow->mode(FL_RGB | FL_DOUBLE | FL_MULTISAMPLE);
       //m_pRenderWindow->mode(FL_RGB | FL_MULTISAMPLE);
