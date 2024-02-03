@@ -1,8 +1,8 @@
 # Program name
-bin_PROGRAMS = xpopengc
+bin_PROGRAMS = xpradar
 
 # Source file names
-xpopengc_SOURCES = \
+xpradar_SOURCES = \
 dictionary.c \
 iniparser.c \
 AppObject.cpp \
@@ -13,4 +13,4 @@ dictionary.h \
 iniparser.h \
 AppObject.h
 
-xpopengc_LDADD = ../gauges/libOpenGCGauges.a ../datasources/libOpenGCDataSources.a ../base/libOpenGCBase.a
+xpradar_LDADD = ../gauges/libXpradarGauges.a ../datasources/libXpradarDataSources.a ../base/libXpradarBase.a

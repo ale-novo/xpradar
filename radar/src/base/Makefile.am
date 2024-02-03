@@ -1,8 +1,8 @@
 # Library name
-noinst_LIBRARIES = libOpenGCBase.a
+noinst_LIBRARIES = libXpradarBase.a
 
 # Source file names
-libOpenGCBase_a_SOURCES = \
+libXpradarBase_a_SOURCES = \
 CircleEvaluator.cpp \
 FLTKRenderWindow.cpp \
 Font.cpp \

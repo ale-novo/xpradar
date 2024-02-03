@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.50])
-AC_INIT([xpopengc], [0.81], [Reto Stockli])
+AC_INIT([0.81])
 AC_CONFIG_SRCDIR([src/main/main.cpp])
 AM_INIT_AUTOMAKE(foreign)
 AM_CONFIG_HEADER([config.h])
@@ -245,7 +245,7 @@ AC_TYPE_UINT32_T
 # Checks for library functions.
 AC_CHECK_FUNCS([bzero floor memset socket sqrt strcspn malloc])
 
-# Add local OpenGC source code directories to include directives
+# Add local source code directories to include directives
 CPPFLAGS="$CPPFLAGS -I$PWD/src/base -I$PWD/src/datasources -I$PWD/src/gauges -I$PWD/src/main"
 
 # Substitute
@@ -256,10 +256,10 @@ AC_SUBST(AM_LDFLAGS)
 if test "x$prefix" = xNONE; then
     prefix=`pwd`;
 fi
-AC_MSG_NOTICE([opengc will be installed in $prefix])
+AC_MSG_NOTICE([will be installed in $prefix])
 
 # Define Packagename for CPP directive in C-based datasource code
-AC_DEFINE([XPOPENGC],[],[CPP directive in C-based datasource code])
+AC_DEFINE([XPRADAR],[],[CPP directive in C-based datasource code])
 
 AC_CONFIG_FILES([Makefile
 src/base/Makefile

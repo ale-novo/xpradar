@@ -18,7 +18,7 @@
 #include <vector> // STL vector include
 #include "Font.h"
 
-namespace OpenGC
+namespace xpradar
 {
 
 class FontManager  
@@ -80,6 +80,6 @@ protected:
   std::vector<Font*> m_FontList;
 };
 
-} // end namespace OpenGC
+} // end namespace xpradar
 
 #endif // !defined(FontMangager_h)

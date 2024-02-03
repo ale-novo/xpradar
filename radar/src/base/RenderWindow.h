@@ -1,5 +1,5 @@
 /**
- * Render windows are the high-level window management object in OpenGC.
+ * Render windows are the high-level window management object.
  * Although this class does not contain any virtual functions, it assumes
  * that a proper rendering context exists PRIOR to any of the GL code
  * executing. Creating a device context is left as an excercise for the
@@ -17,7 +17,7 @@
 #include "OrderedPair.h"
 #include "Gauge.h"
 
-namespace OpenGC
+namespace xpradar
 {
 
 class RenderWindow
@@ -107,7 +107,7 @@ protected:
   int m_Font;
 };
 
-} // end namespace OpenGC
+} // end namespace xpradar
 
 #endif
 

@@ -14,7 +14,7 @@ Version 0.80
 
 Version 0.77
 ------------
-- moved ini files to share/opengc/ during installation
+- moved ini files to share/ during installation
 - added B737 FMC first version
 - added B737 MIP Annunciators
 

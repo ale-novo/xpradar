@@ -72,7 +72,7 @@ void init_wxr(int type, char server_ip[]) {
   
   if (wxr_type == 1) {
     /* initialize UDP socket if needed for WXR data from X-Plane*/
-    /* UDP Server Port (OpenGC acts as UDP server for X-Plane as control pad client) */
+    /* UDP Server Port (acts as UDP server for X-Plane as control pad client) */
     strcpy(udpServerIP, server_ip);
     udpServerPort = 48003;
     

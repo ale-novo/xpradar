@@ -32,7 +32,7 @@ extern "C" {
 
 extern int verbosity;
 
-namespace OpenGC
+namespace xpradar
 {
 
 extern FLTKRenderWindow* m_pRenderWindow;
@@ -122,4 +122,4 @@ void XPlaneDataSource::OnIdle()
   
 } // end "OnIdle()"
 
-} // end namespace OpenGC
+} // end namespace xpradar

@@ -3,7 +3,7 @@
 #include "GLHeaders.h"
 #include "CircleEvaluator.h"
 
-namespace OpenGC
+namespace xpradar
 {
 
 CircleEvaluator
@@ -92,4 +92,4 @@ CircleEvaluator
     m_Radius = 1;
 }
 
-} // end namespace OpenGC
+} // end namespace xpradar

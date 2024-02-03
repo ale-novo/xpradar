@@ -5,7 +5,7 @@
 #ifndef Messages_h
 #define Messages_h
 
-namespace OpenGC
+namespace xpradar
 {
 
 enum Message
@@ -31,6 +31,6 @@ enum Message
   MSG_NAV_ZOOM_INCREASE
 };
 
-} // end namespace OpenGC
+} // end namespace xpradar
 
 #endif

@@ -8,7 +8,7 @@
 
 extern int verbosity;
 
-namespace OpenGC
+namespace xpradar
 {
 
 RenderWindow
@@ -298,4 +298,4 @@ RenderWindow
   }
 }
 
-} // end namespace OpenGC
+} // end namespace xpradar

@@ -23,7 +23,7 @@
 #include "RenderObject.h"
 #include "GaugeComponent.h"
 
-namespace OpenGC
+namespace xpradar
 {
 
 class Gauge: public RenderObject
@@ -88,6 +88,6 @@ protected:
   bool m_DrawGaugeOutline;
 };
 
-} // end namespace OpenGC
+} // end namespace xpradar
 
 #endif

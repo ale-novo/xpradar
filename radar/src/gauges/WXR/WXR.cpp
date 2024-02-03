@@ -12,7 +12,7 @@ a slingle MAP mode (the MAP MODE EXPANDED) implemented.
 #include "WXR/DrawWXR.h"
 #include "WXR/DrawWXRInfo.h"
 
-namespace OpenGC
+namespace xpradar
 {
 
 WXR::WXR()
@@ -114,5 +114,5 @@ void WXR::Render()
   
 }
 
-} // end namespace OpenGC
+} // end namespace xpradar
 

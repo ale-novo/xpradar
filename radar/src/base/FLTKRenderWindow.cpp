@@ -6,7 +6,7 @@
 
 extern int verbosity;
 
-namespace OpenGC
+namespace xpradar
 {
 
 FLTKRenderWindow
@@ -80,4 +80,4 @@ FLTKRenderWindow
   RenderWindow::Render();
 }
 
-} // end namespace OpenGC
+} // end namespace xpradar

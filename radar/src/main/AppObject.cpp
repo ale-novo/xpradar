@@ -16,10 +16,6 @@ extern "C" {
 #include "AppObject.h"
 #include "RenderObject.h"
 
-//--------Data Sources---------
-// Not all data sources work on all platforms,
-// but in the worst case all will at least default
-// to a basic data source
 #include "XPlaneDataSource.h"
 
 //-----------Gauges------------
@@ -30,12 +26,12 @@ extern int verbosity;
 
 extern "C" char clientname[100];
 
-namespace OpenGC
+namespace xpradar
 {
 
   AppObject::AppObject()
   {
-    /*if (verbosity > 0)*/ printf("AppObject - constructing\n");
+    printf("AppObject - constructing\n");
   
     // Make sure all the pointers are nulled out
     m_pFontManager = 0;
@@ -45,7 +41,7 @@ namespace OpenGC
 
     m_InitState = 0;
     
-    // Run a frame-rate test when loading OpenGC?
+    // Run a frame-rate test when loading
     m_FrameTest = false;
 
     /*if (verbosity > 1)*/ printf("AppObject - constructed\n");
@@ -53,7 +49,7 @@ namespace OpenGC
 
   AppObject::~AppObject()
   {
-    // The way OpenGC is laid out, the destructor for the App isn't actually called,
+    // The way is laid out, the destructor for the App isn't actually called,
     // but if it did, we'd want to do a little cleanup
     this->Cleanup();
   }
@@ -85,8 +81,8 @@ namespace OpenGC
 	snprintf (iniFile, sizeof(iniFile), "%s/../../inidata/%s.ini",programPath,iniFileName);
 	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../../fonts/",programPath);
       } else {
-	snprintf (iniFile, sizeof(iniFile), "%s/../share/xpopengc/%s.ini",programPath,iniFileName);
-	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../share/xpopengc/",programPath);
+	snprintf (iniFile, sizeof(iniFile), "%s/../share/xpradar/%s.ini",programPath,iniFileName);
+	snprintf (m_FontPath, sizeof(m_FontPath), "%s/../share/xpradar/",programPath);
       }
     } else {
       /* assume we start from source or bin dir */
@@ -101,8 +97,8 @@ namespace OpenGC
 	snprintf (iniFile, sizeof(iniFile), "../../inidata/%s.ini", iniFileName);
 	snprintf (m_FontPath, sizeof(m_FontPath), "../../fonts/");
       } else {
-	snprintf (iniFile, sizeof(iniFile), "../share/xpopengc/%s.ini", iniFileName);
-	snprintf (m_FontPath, sizeof(m_FontPath), "../share/xpopengc/");
+	snprintf (iniFile, sizeof(iniFile), "../share/xpradar/%s.ini", iniFileName);
+	snprintf (m_FontPath, sizeof(m_FontPath), "../share/xpradar/");
       }
     }
 
@@ -199,7 +195,7 @@ namespace OpenGC
     int default_server_port = 8091;
     char default_data_source[] = "X-Plane";
     char default_xplane_path[] = "";
-    char default_client_name[] = "xpopengc";
+    char default_client_name[] = "xpradar";
     int default_customdata = 0; // do not read from X-Plane's "Custom Data" directory by default
     int default_radardata = 0; // do not read from X-Plane's UDP radar data by default
     char default_dem_path[] = "";
@@ -271,7 +267,7 @@ namespace OpenGC
       if (verbosity > 1) printf("AppObject - ready to create render window\n");
 
       // Create the new render window
-      m_pRenderWindow = new FLTKRenderWindow(initX, initY, width, height, "The Open Glass Cockpit Project");
+      m_pRenderWindow = new FLTKRenderWindow(initX, initY, width, height, "XPRadar");
       m_pRenderWindow->resizable(m_pRenderWindow);
       m_pRenderWindow->mode(FL_RGB | FL_DOUBLE | FL_MULTISAMPLE);
       //m_pRenderWindow->mode(FL_RGB | FL_MULTISAMPLE);
@@ -367,45 +363,7 @@ namespace OpenGC
   }
 
   void AppObject::CheckFrameRate()
-  {/*
-     double reps = 200;
-     
-     m_pDataSource->ILS_Glideslope_Alive = true;
-     m_pDataSource->Nav1_Valid = true;
-     
-     for(double i = 0; i < reps; i += 1.0)
-     {
-     // Pitch and bank bounce around
-     m_pDataSource->Pitch = 15 * sin( i * 3.14 / 180 );
-     m_pDataSource->Bank = 30 * sin( 2 * i * 3.14 / 180 );
-     
-     // ILS needles slew
-     m_pDataSource->Nav1_Localizer_Needle =  sin( i * 3.14 / 90 );
-     m_pDataSource->Nav1_Glideslope_Needle = sin( i * 3.14 / 90 );
-     
-     // Airspeed ramps from 0 to 250 and back down
-     m_pDataSource->IAS = 250 * sin( (i / reps) * 3.14 );
-     
-     // Altitude ramps from 7500 to 12500 and back down
-     m_pDataSource->Barometric_Alt_Feet = 7500 + 5000 * sin( (i / reps) * 3.14 );
-     
-     // Position slews around (Pittsburgh area)
-     m_pDataSource->Longitude = -80.0 + 10 * sin( (i / reps) * 3.14 );
-     m_pDataSource->Latitude = 40.27 + 10 * sin( (i / reps) * 3.14 );
-     
-     // Force the render window to update
-     m_pRenderWindow->redraw();
-     Fl::flush();
-     }
-     
-     // Reset the data source
-     m_pDataSource->InitializeData();
-     
-     m_pDataSource->ILS_Glideslope_Alive = false;
-     m_pDataSource->Nav1_Valid = false;
-     
-     m_FrameTest = false;
-   */
+  {
   }
   
-} // end namespace OpenGC
+} // end namespace xpradar

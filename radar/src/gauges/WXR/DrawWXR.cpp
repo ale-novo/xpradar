@@ -11,7 +11,7 @@ extern "C" {
 #include "wxrdata.h"
 }
 
-namespace OpenGC
+namespace xpradar
 {
   
   DrawWXR::DrawWXR()
@@ -296,4 +296,4 @@ namespace OpenGC
     
   }
 
-} // end namespace OpenGC
+} // end namespace xpradar

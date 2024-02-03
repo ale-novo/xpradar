@@ -7,7 +7,7 @@
 
 #include "Gauge.h"
 
-namespace OpenGC
+namespace xpradar
 {
 
 class DummyGauge : public Gauge  
@@ -21,6 +21,6 @@ public:
 
 };
 
-} // end namespace OpenGC
+} // end namespace xpradar
 
 #endif

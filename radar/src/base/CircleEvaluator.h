@@ -8,7 +8,7 @@
 #ifndef CircleEvaluator_h
 #define CircleEvaluator_h
 
-namespace OpenGC
+namespace xpradar
 {
 
 class CircleEvaluator  
@@ -50,6 +50,6 @@ protected:
 
 };
 
-} // end namespace OpenGC
+} // end namespace xpradar
 
 #endif

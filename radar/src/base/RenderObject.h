@@ -13,7 +13,7 @@
 #include "GLHeaders.h"
 #include "Messages.h"
 
-namespace OpenGC
+namespace xpradar
 {
 
 // Forward declaration of data source
@@ -111,6 +111,6 @@ protected:
   int m_Rotation;
 };
 
-} // end namespace OpenGC
+} // end namespace xpradar
 
 #endif

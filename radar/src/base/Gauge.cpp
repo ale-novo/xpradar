@@ -11,7 +11,7 @@
 extern int verbosity;
 //extern bool m_FrameTest; // how do we find that variable?
 
-namespace OpenGC
+namespace xpradar
 {
 
 Gauge
@@ -223,7 +223,7 @@ Gauge
     ComponentIteratorType it;
     for (it = m_GaugeComponentList.begin(); it != m_GaugeComponentList.end(); ++it)
     {
-      (*it)->OnOpenGCMessage(message, data);
+      (*it)->OnXpradarMessage(message, data);
     }
   }
 }
@@ -243,4 +243,4 @@ Gauge
   glEnd();
 }
 
-} // end namespace OpenGC
+} // end namespace xpradar

@@ -1,11 +1,11 @@
-This is OpenGC adapted for X-Plane by use of a new TCP/IP data plugin between X-Plane
-and OpenGC called XPSERVER. The plugin allows to transfer X-Plane internal and plane
+This is adapted for X-Plane by use of a new TCP/IP data plugin between X-Plane
+and XPSERVER. The plugin allows to transfer X-Plane internal and plane
 specific data. The code has been tested on OSX 10.6 and on Ubuntu 18.04
 
 I have removed the cmake dependency and implemented a standard gnu configure/autoconf/automake toolset.
 Also, several of the codes were cleaned from warnings and the xplane datasource was completely remodeled,
 plus all other data sources were turned off. They can be turned on with some modifications to their code,
-so that they are in line again with the current state of the OpenGC framework. Windows compilation support
+so that they are in line again with the current state of the framework. Windows compilation support
 was removed (who cares about windows anyway ...).
 
 ## Installation Dependencies
@@ -45,7 +45,7 @@ Then type:
 make
 ```
 
-This should build the application xpopengc in src/main.
+This should build the application in src/main.
 
 Since either of the FTGL, FLTK, Plib, Freetype libraries might be located in a custom location, type ./configure --help
 to see the options to customize the paths to those libraries during configuration. The freetype library somehow requires
@@ -57,33 +57,33 @@ to specify its prefix on Ubuntu/Debian: so try:
 
 ## Run How-to:
 
-edit the file inidata/default.ini and change the following items according to your OpenGC/X-Plane configuration:
+edit the file inidata/default.ini and change the following items according to your X-Plane configuration:
 
 ```
 cd src/main
-./xpopengc default
+./xpradar default
 ```
 
 It should start a X window with a default gauge and tell you on the command line that it expects a X-Plane connection
 
-Start X-Plane with the xpserver plugin. You should see OpenGC display content changing according
+Start X-Plane with the xpserver plugin. You should see the display content changing according
 To your flight data.
 
-## Configuration using opengc.ini
+## Configuration using default.ini
 
-To get running, edit opengc.ini so that it matches your system
+To get running, edit default.ini so that it matches your system
 configuration and desired gauge layout.
 
 ## Paths
-The first portion of opengc.ini establishes the location of your font and
+The first portion of default.ini establishes the location of your font and
 nav data directories. Both declarations are formatted in the same way, as
 follows:
 
 ```
 NAV DATABASE PATH
-/Users/beowulf/opengc/xplanenav/
+xplanenav/
 FONT PATH
-/Users/beowulf/opengc/opengc/Fonts/
+Fonts/
 ```
 
 ## Data source selection
@@ -141,7 +141,7 @@ instructions, it assumed that you are running both X-Plane on
 a private network, 192.168.1.x, as is common with Cable/DSL routers. More
 complicated network configuration is beyond the scope of this document.
 
-1. In opengc.ini, make sure X-Plane is selected as your data source.
+1. In default.ini, make sure X-Plane is selected as your data source.
 The remainder of these instructions refer to X-Plane itself.
 2. Click the circle next to IP address of data receiver in the Set
 Internet Connections dialog. Fill in 192.168.1.255 as the address,

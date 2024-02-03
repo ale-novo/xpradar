@@ -21,15 +21,15 @@
 int verbosity; // 0: no debug, 1: some debug, 2: lots of debug
 
 //-------Construct the one and only App Object-----
-OpenGC::AppObject theApp;
+xpradar::AppObject theApp;
 
 // The update rate for the app's idle function
 float appUpdateRate;
 
 //------------Static RenderObject members...-----------
-OpenGC::DataSource* OpenGC::RenderObject::m_pDataSource = 0;
-OpenGC::FontManager* OpenGC::RenderObject::m_pFontManager = 0;
-std::list<OpenGC::Object*>* OpenGC::Object::m_StaticObjectList = 0;
+xpradar::DataSource* xpradar::RenderObject::m_pDataSource = 0;
+xpradar::FontManager* xpradar::RenderObject::m_pFontManager = 0;
+std::list<xpradar::Object*>* xpradar::Object::m_StaticObjectList = 0;
 
 // Global idle function to handle app updates
 void GlobalIdle(void *)
