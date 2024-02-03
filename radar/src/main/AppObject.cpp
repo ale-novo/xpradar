@@ -279,7 +279,7 @@ namespace ns
       if (verbosity > 1) printf("AppObject - ready to create render window\n");
 
       // Create the new render window
-      m_pRenderWindow = new FLTKRenderWindow(initX, initY, width, height, "The Open Glass Cockpit Project");
+      m_pRenderWindow = new FLTKRenderWindow(initX, initY, width, height, "RADAR");
       m_pRenderWindow->resizable(m_pRenderWindow);
       m_pRenderWindow->mode(FL_RGB | FL_DOUBLE | FL_MULTISAMPLE);
       //m_pRenderWindow->mode(FL_RGB | FL_MULTISAMPLE);
