@@ -13,4 +13,4 @@ dictionary.h \
 iniparser.h \
 ogcAppObject.h
 
-xpopengc_LDADD = ../gauges/libOpenGCGauges.a ../datasources/libOpenGCDataSources.a ../navigation/libOpenGCNav.a ../base/libOpenGCBase.a
+xpopengc_LDADD = ../gauges/libOpenGCGauges.a ../datasources/libOpenGCDataSources.a ../base/libOpenGCBase.a

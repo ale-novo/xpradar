@@ -246,7 +246,7 @@ AC_TYPE_UINT32_T
 AC_CHECK_FUNCS([bzero floor memset socket sqrt strcspn malloc])
 
 # Add local OpenGC source code directories to include directives
-CPPFLAGS="$CPPFLAGS -I$PWD/src/base -I$PWD/src/datasources -I$PWD/src/navigation -I$PWD/src/gauges -I$PWD/src/main"
+CPPFLAGS="$CPPFLAGS -I$PWD/src/base -I$PWD/src/datasources -I$PWD/src/gauges -I$PWD/src/main"
 
 # Substitute
 AC_SUBST(AM_CXXFLAGS)
@@ -265,7 +265,6 @@ AC_CONFIG_FILES([Makefile
 src/base/Makefile
 src/datasources/Makefile
 src/gauges/Makefile
-src/main/Makefile
-src/navigation/Makefile])
+src/main/Makefile])
 
 AC_OUTPUT
