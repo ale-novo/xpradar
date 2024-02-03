@@ -128,7 +128,7 @@ PLUGIN_API int XPluginStart(
   /* define the xpserver Plugin Menu */
   strcpy(outName, "xpserver");
   strcpy(outSig, "xplanesdk.xpserver");
-  strcpy(outDesc, "This plugin communicates X-Plane data to OpenCockpits, SISMO, Rasperry, Leo Bodnar and OpenGC via TCP/IP.");
+  strcpy(outDesc, "This plugin communicates X-Plane data via TCP/IP.");
 
   xpserverMenuItem = XPLMAppendMenuItem( XPLMFindPluginsMenu(), "xpserver", 0, 1);		
   xpserverMenu = XPLMCreateMenu( "xpserver", XPLMFindPluginsMenu(), xpserverMenuItem, xpserverMenuHandlerCallback,0);

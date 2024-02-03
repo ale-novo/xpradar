@@ -46,20 +46,20 @@ Build:
 make
 ```
 
-This should build the application xpopengc in src/main.
+This should build the application in src/main.
 
 ### Run:
 
 Start X-Plane first.
 
-Edit the file inidata/default.ini and change the following items according to your OpenGC/X-Plane configuration:
+Edit the file inidata/default.ini and change the following items according to your X-Plane configuration:
 
 ```
 cd src/main
-./xpopengc wxr
+./xpradar default
 ```
 
 It should start a X window with a default gauge and tell you on the command line that it expects a X-Plane connection
 
-Start X-Plane with the xpserver plugin. You should see OpenGC display content changing according
+Start X-Plane with the xpserver plugin. You should see the display content changing according
 To your flight data. The current code is in development, any updates welcome.
