@@ -62,14 +62,14 @@ int main(int argc, char* argv[])
     printf("Could not establish new Termination signal handler.\n");
   }
 
-  printf ("=========== OpenGC - Starting up ==========\n");
+  printf ("=========== Starting up ===========\n");
     
   // Set the update rate in nominal seconds per frame
   if (argc == 1) {
     appUpdateRate = 1.0 / 50.0;
   } else {
     appUpdateRate = 1.0 / (float) atoi(argv[2]);
-    printf("Started OpenGC with an update rate of %f [1/s]\n",(float) atoi(argv[2]));
+    printf("Started with an update rate of %f [1/s]\n",(float) atoi(argv[2]));
   }
 
   // Register the idle function (which is a timeout to
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
   // Start up the OGC application
   theApp.Go(argv[0],argv[1]);
 
-  printf ("=========== OpenGC  -  Finished  ==========\n");
+  printf ("=========== Finished ===========\n");
   return 0;
 }
 

@@ -1,8 +1,8 @@
-# OpenGC - Installation and Getting Started
+# Installation and Getting Started
 
-## Configuration of OpenGC using opengc.ini
+## Configuration using opengc.ini
 
-To get OpenGC running, edit opengc.ini so that it matches your system
+To get running, edit opengc.ini so that it matches your system
 configuration and desired gauge layout.
 
 ## Paths
@@ -21,7 +21,7 @@ FONT PATH
 You should verify that the correct data source is selected for the type of
 sim that you have. There are restrictions as to which data source will work
 with which operating systems, some of which arise from the sims themselves
-4and some of which are limitations of OpenGC that may be removed in the
+4and some of which are limitations that may be removed in the
 future. Please see Data source / sim configuration for more details.
 
 * X-Plane version 6.30+
@@ -35,8 +35,8 @@ X-Plane
 The parameters of the render window are xPosition yPosition xSize
 ySize frameTest, with the first four being expressed in integer pixels and
 the last as 0=false, 1=true. Note that the size and position represent initial
-window placement and size; you can change this quite easily once OpenGC
-is running. The frame rate test runs through a brief demo once OpenGC
+window placement and size; you can change this quite easily once
+is running. The frame rate test runs through a brief demo once
 loads if set to true (i.e. 1) - this unfortunately does not work on Windows
 at the moment because of FLTK issues.
 
@@ -56,19 +56,19 @@ ENDGAUGE
 ```
 
 Positions are measured in approximate millimeters (more full-featured
-calibration tools will be included in version 1.0 of OpenGC). Scales are
+calibration tools will be included in version 1.0). Scales are
 measured in % / 100. Therefore 1.0 is full scale, 0.5 is half, and 2.0 is
-double. As provided, OpenGC should work well on a 1024x768 17 inch
+double. As provided, it should work well on a 1024x768 17 inch
 monitor without modifying the scale and position of the default gauges.
 
 ## Data source / sim configuration
-Although it’s possible to run OpenGC on the same machine as the sim, this
+Although it’s possible to run on the same machine as the sim, this
 is not the way to get good performance. I strongly suggest creating a small
 LAN and running separate sim and glass cockpit machines.
 
 ## X-Plane configuration
-OpenGC can read X-Plane packets sent via UDP over port 49000. For these
-instructions, it assumed that you are running both X-Plane and OpenGC on
+can read X-Plane packets sent via UDP over port 49000. For these
+instructions, it assumed that you are running both X-Plane on
 a private network, 192.168.1.x, as is common with Cable/DSL routers. More
 complicated network configuration is beyond the scope of this document.
 
@@ -79,12 +79,12 @@ Internet Connections dialog. Fill in 192.168.1.255 as the address,
 and 49000 as the port number. Note that 192.168.1.255 is the broad-
 cast address for the network, meaning that all machines with IP’s of
 192.168.1.x will receive data from X-Plane. This allows you to eas-
-ily add extra machines to display different OpenGC gauges without
+ily add extra machines to display different gauges without
 reconfiguring X-Plane.
 3. Close the internet connections page. Open Set Data Output and
 check the first of four circles next to the following variables: 2, 7, 24,
 725, 37, 38, 39, and 40. If you fail to highlight a variable, it will not be
-sent to OpenGC. Selecting incorrect variables will not crash OpenGC,
+sent. Selecting incorrect variables will not crash,
 but it may result in a particular gauge not working as expected
-4. Start flying. It does not matter whether OpenGC or X-Plane is started
+4. Start flying. It does not matter whether X-Plane is started
 first.
