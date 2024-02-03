@@ -10,11 +10,9 @@
 
 //---------Base Stuff----------
 #include <FL/Fl.H>
-extern "C" {
-#include "dictionary.h"
-#include "iniparser.h"
-#include "wxrdata.h"
-}
+#include "../libxpcockpit/src/dictionary.h"
+#include "../libxpcockpit/src/iniparser.h"
+#include "../libxpcockpit/src/wxrdata.h"
 #include "AppObject.h"
 #include "RenderObject.h"
 
