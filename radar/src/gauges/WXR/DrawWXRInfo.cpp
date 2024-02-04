@@ -171,16 +171,6 @@ namespace ns
       /* Remove Cone area outside of WXR image */
       glColor3ub(0,0,0);
 
-      // Center
-      /*
-      glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-      glBegin(GL_POLYGON);
-      glVertex2f(m_PhysicalSize.x/2,0);
-      glVertex2f(m_PhysicalSize.x*0.66,m_PhysicalSize.y);
-      glVertex2f(m_PhysicalSize.x*0.33,m_PhysicalSize.y);
-      glEnd();
-      */
-
       // Lower Left Corner
       glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
       glBegin(GL_POLYGON);
