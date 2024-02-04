@@ -14,9 +14,7 @@ namespace ns
   DrawWXRInfo::DrawWXRInfo()
   {
     printf("DrawWXRInfo constructed\n");
-  
     m_Font = m_pFontManager->LoadDefaultFont();
-
   }
 
   DrawWXRInfo::~DrawWXRInfo()
@@ -50,16 +48,53 @@ namespace ns
     float *heading_mag = link_dataref_flt("sim/flightmodel/position/mag_psi",-1);
     float *magnetic_variation = link_dataref_flt("sim/flightmodel/position/magnetic_variation",-1);
 
+    // get a time
+    float *elapsed = link_dataref_flt("sim/time/local_time_sec", -1);
+
+    // convert to 20 sec periods
+    float cycleTime = fmod(*elapsed, 20.0f);
+    //printf("Cycle Time: %f seconds\n", cycleTime);
+
+    // Mapping cycleTime to 0-360 range
+    float mappedValue = (cycleTime / 20.0f) * 360.0f;
+    //printf("Mapped Value: %f\n", mappedValue);
+
+
     if ((heading_map != FLT_MISS) && (*magnetic_variation != FLT_MISS)) {
 
       glMatrixMode(GL_MODELVIEW);
+      glPushMatrix();
+
+      // Translate the center of rotation to the origin
+      glTranslatef(m_PhysicalSize.x/2, 0, 0);
+  
+      // Rotate around the z-axis, OpenGL expects angles in degrees
+      glRotatef(mappedValue, 0, 0, 1);
+  
+      // Translate back to the original position
+      glTranslatef(-m_PhysicalSize.x/2, 0, 0);
+
+      // Set color to black
+      glColor3ub(0,0,0);
+
+      // Draw the triangle
+      glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+      glBegin(GL_POLYGON);
+        // The vertices should be defined relative to the center of rotation
+        glVertex2f(m_PhysicalSize.x/2,0); // This vertex is at the center of rotation
+        glVertex2f(m_PhysicalSize.x*-0.5,m_PhysicalSize.y);
+        glVertex2f(m_PhysicalSize.x*1.5,m_PhysicalSize.y);
+      glEnd();
+
+      glPopMatrix(); // Restore the original model view matrix
+
       glPushMatrix();
 
       /* Plot Something in red on the upper left corner */
       /*
       glColor3ub(255,0,0);
       m_pFontManager->SetSize( m_Font, fontSize, fontSize );
-      snprintf(buffer, sizeof(buffer), "BLABLA");
+      snprintf(buffer, sizeof(buffer), "test");
       m_pFontManager->Print(0.05*m_PhysicalSize.x, 0.9*m_PhysicalSize.y, &buffer[0], m_Font);
       */
 
@@ -68,14 +103,11 @@ namespace ns
       m_pFontManager->SetSize( m_Font, fontSize, fontSize );
       snprintf(buffer, sizeof(buffer), "%03d", (int) lroundf(heading_map));
       m_pFontManager->Print(0.9*m_PhysicalSize.x, 0.9*m_PhysicalSize.y, &buffer[0], m_Font);
-
       
       // Shift center and rotate about heading
       glTranslatef(m_PhysicalSize.x*acf_x, m_PhysicalSize.y*acf_y, 0.0);
       glRotatef(heading_map + *magnetic_variation, 0, 0, 1);
 
-      /* DRAW Airports, NAVAIDS, Fixes etc. */
-	
       /* end of down-shifted coordinate system */
       glPopMatrix();
 
@@ -138,7 +170,17 @@ namespace ns
 
       /* Remove Cone area outside of WXR image */
       glColor3ub(0,0,0);
-	
+
+      // Center
+      /*
+      glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+      glBegin(GL_POLYGON);
+      glVertex2f(m_PhysicalSize.x/2,0);
+      glVertex2f(m_PhysicalSize.x*0.66,m_PhysicalSize.y);
+      glVertex2f(m_PhysicalSize.x*0.33,m_PhysicalSize.y);
+      glEnd();
+      */
+
       // Lower Left Corner
       glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
       glBegin(GL_POLYGON);

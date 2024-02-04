@@ -7,6 +7,7 @@
 #include "CircleEvaluator.h"
 #include "WXR/WXR.h"
 #include "WXR/DrawWXR.h"
+
 extern "C" {
 #include "wxrdata.h"
 }
@@ -26,14 +27,12 @@ namespace ns
     m_wxr_nlin = 0;
 
     wxr_image = NULL;
-  
   }
 
   DrawWXR::~DrawWXR()
   {
     // Destruction handled by base class
   }
-
  
   void DrawWXR::Render()
   {
@@ -47,7 +46,6 @@ namespace ns
 
     int i;
     int j;
-    
     
     // double dtor = 0.0174533; /* radians per degree */
     // double radeg = 57.2958;  /* degree per radians */
@@ -76,7 +74,6 @@ namespace ns
     // The input coordinates are in lon/lat, so we have to rotate against true heading
     // despite the NAV display is showing mag heading
     if ((heading_map != FLT_MISS) && (wxr_data)) {
-	        
       // Shift center and rotate about heading
       glMatrixMode(GL_MODELVIEW);
 
@@ -180,15 +177,8 @@ namespace ns
 	glTranslatef(m_PhysicalSize.x*acf_x, m_PhysicalSize.y*acf_y, 0.0);
 	glRotatef(heading_map, 0, 0, 1);
 
-
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -250,6 +240,7 @@ namespace ns
 	// remainder of a circle subtracted from a square, and are formed
 	// by fanning out triangles from a point just off each corner
 	// to an arc descrbing the curved portion of the art. horiz.
+
 	CircleEvaluator aCircle;
 	aCircle.SetRadius(m_PhysicalSize.y*(map_y_max-acf_y));
 	
@@ -292,9 +283,6 @@ namespace ns
 	glPopMatrix();
  	
       } // valid acf coordinates
-
     } // known heading and WXR data allocated
-    
   }
-
 } // end namespace ns

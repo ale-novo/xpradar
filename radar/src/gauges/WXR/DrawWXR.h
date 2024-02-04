@@ -32,7 +32,6 @@ protected:
 
   int m_wxr_ncol;
   int m_wxr_nlin;
-  
 };
 
 } // end namespace ns
