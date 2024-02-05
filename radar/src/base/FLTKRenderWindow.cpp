@@ -13,6 +13,7 @@ FLTKRenderWindow
 ::FLTKRenderWindow(int X, int Y, int W, int H, const char *L) : Fl_Gl_Window(X, Y, W, H, L)
 {
   if (verbosity > 0) printf("FLTKRenderWindow - constructing\n");
+  //mode(FL_RGB | FL_DOUBLE | FL_DEPTH | FL_STENCIL);
 
   // Safe to enable rendering
   m_IsOKToRender = true;
@@ -29,7 +30,24 @@ void
 FLTKRenderWindow
 ::draw()
 {
+//  this->Render();
+/*
+  if (!valid()) {
+    glViewport(0, 0, w(), h());
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    valid(1);
+  }
+
+  glEnable(GL_STENCIL_TEST);
+  glStencilFunc(GL_ALWAYS, 1, 0xFF); // Pass stencil test always
+  glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE); // Replace stencil buffer with reference value where stencil test passes
+  glStencilMask(0xFF); // Enable writing to the stencil buffer
+*/
   this->Render();
+
+//  glDisable(GL_STENCIL_TEST); 
+
+
 }
 
 int

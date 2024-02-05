@@ -9,7 +9,7 @@ a slingle MAP mode (the MAP MODE EXPANDED) implemented.
 #include "GLHeaders.h"
 #include "GaugeComponent.h"
 #include "WXR/WXR.h"
-#include "WXR/DrawWXR.h"
+#include "WXR/DrawWXRL.h"
 #include "WXR/DrawWXRInfo.h"
 
 namespace ns
@@ -37,12 +37,19 @@ WXR::WXR()
   m_PhysicalSize.y = 160;
 
   /* Create Gauge Component that renders the WXR Image */
-  DrawWXR* pDrawWXR = new DrawWXR();
-  pDrawWXR->SetParentRenderObject(this);
-  pDrawWXR->SetPosition(m_PhysicalPosition.x,m_PhysicalPosition.y);
-  pDrawWXR->SetSize(m_PhysicalSize.x,m_PhysicalSize.y);
-  pDrawWXR->SetWXRGauge(this);
-  this->AddGaugeComponent(pDrawWXR);
+  DrawWXRL* pDrawWXRL = new DrawWXRL();
+  pDrawWXRL->SetParentRenderObject(this);
+  pDrawWXRL->SetPosition(m_PhysicalPosition.x,m_PhysicalPosition.y);
+  pDrawWXRL->SetSize(m_PhysicalSize.x,m_PhysicalSize.y);
+  pDrawWXRL->SetWXRGauge(this);
+  this->AddGaugeComponent(pDrawWXRL);
+
+  DrawWXRR* pDrawWXRR = new DrawWXRR();
+  pDrawWXRR->SetParentRenderObject(this);
+  pDrawWXRR->SetPosition(m_PhysicalPosition.x,m_PhysicalPosition.y);
+  pDrawWXRR->SetSize(m_PhysicalSize.x,m_PhysicalSize.y);
+  pDrawWXRR->SetWXRGauge(this);
+  this->AddGaugeComponent(pDrawWXRR);
 
   /* Create Gauge Component that renders the Circles and other Info */
   DrawWXRInfo* pDrawWXRInfo = new DrawWXRInfo();
@@ -51,9 +58,6 @@ WXR::WXR()
   pDrawWXRInfo->SetSize(m_PhysicalSize.x,m_PhysicalSize.y);
   pDrawWXRInfo->SetWXRGauge(this);
   this->AddGaugeComponent(pDrawWXRInfo);
-
-  /* Create Gauge Component that does XY */
-  /* ... */
 
 }
 

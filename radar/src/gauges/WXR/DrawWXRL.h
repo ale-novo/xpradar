@@ -32,6 +32,13 @@ protected:
 
   int m_wxr_ncol;
   int m_wxr_nlin;
+
+  float sweepTime = 5.0f; // radar sweep period
+                           //
+  int sweepReverse = 0; // radar sweep reverse 
+  int countReverse = 0; // only reverse the first time
+  int wxr_update = 0;
+
 };
 
 } // end namespace ns

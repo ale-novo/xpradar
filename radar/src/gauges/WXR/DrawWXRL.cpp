@@ -9,29 +9,24 @@
 #include "WXR/DrawWXR.h"
 
 extern "C" {
-#include "wxrdata.h"
+  #include "wxrdata.h"
 }
 
 namespace ns
 {
-  
   DrawWXR::DrawWXR()
   {
     printf("DrawWXR constructed\n");
     
     m_Font = m_pFontManager->LoadDefaultFont();
-    
     m_WXRGauge = NULL;
-
     m_wxr_ncol = 0;
     m_wxr_nlin = 0;
-
     wxr_image = NULL;
   }
 
-  DrawWXR::~DrawWXR()
+  DrawWXR::~DrawWXR() // Destruction handled by base class
   {
-    // Destruction handled by base class
   }
  
   void DrawWXR::Render()
@@ -42,14 +37,10 @@ namespace ns
  
     // define geometric stuff
     float fontSize = 4.0 * m_PhysicalSize.x / 150.0;
-    // float lineWidth = 3.0;
 
     int i;
     int j;
     
-    // double dtor = 0.0174533; /* radians per degree */
-    // double radeg = 57.2958;  /* degree per radians */
-
     // define ACF center position in relative coordinates: bottom center
     float acf_x = 0.500;
     float acf_y = 0.000;
@@ -70,7 +61,14 @@ namespace ns
     /* Sample Datarefs for controlling WXR gain and tilt */
     float *wxr_gain = link_dataref_flt("xpserver/wxr_gain",-2); /* Gain should go from 0.1 .. 2.0 */
     float *wxr_tilt = link_dataref_flt("xpserver/wxr_tilt",-2); /* Tilt in degrees up/down : not implemented yet */
-    
+
+    // get a time
+    float *elapsed = link_dataref_flt("sim/time/local_time_sec", -1);
+
+    // convert to periods
+    float cycleTime = fmod(*elapsed, sweepTime);
+    //printf("Cycle Time: %f seconds\n", cycleTime);
+
     // The input coordinates are in lon/lat, so we have to rotate against true heading
     // despite the NAV display is showing mag heading
     if ((heading_map != FLT_MISS) && (wxr_data)) {
@@ -91,7 +89,7 @@ namespace ns
 	float mpplat =  111.0 / (float) wxr_pixperlat / 1.852;
 
 	/* free WXR array and recreate it if we have new WXR data */
-	if (wxr_newdata == 1) {
+	if (wxr_newdata == 1 && wxr_update == 2) {
 	  printf("Plotting New WXR Data in NAV Display\n");
 	  m_wxr_ncol = wxr_ncol;
 	  m_wxr_nlin = wxr_nlin;
@@ -107,6 +105,7 @@ namespace ns
 	  /* copy temporary WXR array to WXR array */
 	  /* TODO: OPENGL Transparency not working */
 	  /* TODO: Only create image if data has changed */
+
 	  for (i = 0; i < m_wxr_nlin; i++) {
 	    for (j = 0; j < m_wxr_ncol; j++) {
 	      
@@ -171,11 +170,57 @@ namespace ns
 	  }
 	  wxr_newdata = 0;
 	}
-	
-	glPushMatrix();
-	
-	glTranslatef(m_PhysicalSize.x*acf_x, m_PhysicalSize.y*acf_y, 0.0);
-	glRotatef(heading_map, 0, 0, 1);
+	wxr_update = 0;
+
+        glPushMatrix();
+
+        // SCISSOR half of the screen
+        glEnable(GL_SCISSOR_TEST);
+
+	//glScissor(0, 0, m_PixelSize.x*acf_x, m_PixelSize.y);
+
+        glTranslatef(m_PhysicalSize.x*acf_x, m_PhysicalSize.y*acf_y, 0.0);
+
+        float t; // Factor to scale m_PixelSize.x by
+        if (countReverse == 1) { //reverse
+            t = cycleTime / 5.0f;
+        } else {
+            t = 1.0f - (cycleTime / 5.0f);
+        }
+
+        int scaledPixelSizeX = (int)(m_PixelSize.x * t); // Calculate scaled m_PixelSize.x
+        glScissor(0, 0, scaledPixelSizeX, m_PixelSize.y);
+
+        if (wxr_init == 0) {
+          glRotatef((int) lroundf(heading_map), 0, 0, 1);
+          old_heading = heading_map;
+	  wxr_init = 1;
+	  //printf("rotate init\n");
+        }
+
+        if (cycleTime >= 0.0f && cycleTime < 1.0f) {
+          if (countReverse == 0) {
+
+            if ( wxr_update == 2) {
+              glRotatef((int) lroundf(heading_map), 0, 0, 1);
+              old_heading = heading_map;
+              printf("rotate new heading\n");
+
+            } else {
+              wxr_update = wxr_update + 1;
+              glRotatef((int) lroundf(old_heading), 0, 0, 1);
+	    }
+
+          } else {
+            glRotatef((int) lroundf(old_heading), 0, 0, 1);
+          }
+          countReverse = countReverse + 1;
+
+        } else {
+          glRotatef((int) lroundf(old_heading), 0, 0, 1);
+          countReverse = 0;
+	  //printf("rotate old heading\n");
+        }
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
@@ -214,7 +259,8 @@ namespace ns
 	/* end of down-shifted and rotated coordinate system */
 	glPopMatrix();
 
-	/* Delete radar image behind aircraft and beyond range of XX NM*/
+	/* Cover radar image behind aircraft and beyond range of XX NM*/
+
 	glPushMatrix();
 
 	glColor3ub(0,0,0);
@@ -279,9 +325,10 @@ namespace ns
 	glVertex2f(m_PhysicalSize.x,m_PhysicalSize.y*acf_y);
 	glVertex2f(m_PhysicalSize.x/2,m_PhysicalSize.y*acf_y);
 	glEnd();
-	
+
+        glDisable(GL_SCISSOR_TEST);
 	glPopMatrix();
- 	
+	
       } // valid acf coordinates
     } // known heading and WXR data allocated
   }

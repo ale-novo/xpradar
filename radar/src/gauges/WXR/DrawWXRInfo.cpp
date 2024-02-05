@@ -51,14 +51,39 @@ namespace ns
     // get a time
     float *elapsed = link_dataref_flt("sim/time/local_time_sec", -1);
 
-    // convert to 20 sec periods
-    float cycleTime = fmod(*elapsed, 20.0f);
+    // convert to sweep time
+    float cycleTime = fmod(*elapsed, sweepTime);
     //printf("Cycle Time: %f seconds\n", cycleTime);
 
-    // Mapping cycleTime to 0-360 range
-    float mappedValue = (cycleTime / 20.0f) * 360.0f;
-    //printf("Mapped Value: %f\n", mappedValue);
+    // initial sweep angle
+    float sweepAngle = 45.0f;
+    float halfSweepTime = sweepTime * 0.5;
 
+    if (cycleTime >= 0.0f && cycleTime < 1.0f) {
+      if (countReverse == 0) {
+        sweepReverse = 1 - sweepReverse;
+        //printf("reverse sweep\n");
+      }
+      countReverse = countReverse + 1;
+    } else {
+      countReverse = 0;
+    }
+
+    if (sweepReverse == 0) {
+
+      if (cycleTime <= halfSweepTime) {
+        sweepAngle = minSweep * (1 - (cycleTime / halfSweepTime));
+      } else {
+        sweepAngle = 359 + (maxSweep - 359) * ((cycleTime - halfSweepTime) / halfSweepTime);
+      }
+
+    } else {
+      if (cycleTime <= halfSweepTime) {
+        sweepAngle = maxSweep + (359 - maxSweep) * (cycleTime / halfSweepTime);
+      } else {
+        sweepAngle = minSweep * ((cycleTime - halfSweepTime) / halfSweepTime);
+      }
+    }
 
     if ((heading_map != FLT_MISS) && (*magnetic_variation != FLT_MISS)) {
 
@@ -69,7 +94,7 @@ namespace ns
       glTranslatef(m_PhysicalSize.x/2, 0, 0);
   
       // Rotate around the z-axis, OpenGL expects angles in degrees
-      glRotatef(mappedValue, 0, 0, 1);
+      glRotatef(sweepAngle, 0, 0, 1);
   
       // Translate back to the original position
       glTranslatef(-m_PhysicalSize.x/2, 0, 0);
@@ -82,8 +107,8 @@ namespace ns
       glBegin(GL_POLYGON);
         // The vertices should be defined relative to the center of rotation
         glVertex2f(m_PhysicalSize.x/2,0); // This vertex is at the center of rotation
-        glVertex2f(m_PhysicalSize.x*-0.5,m_PhysicalSize.y);
-        glVertex2f(m_PhysicalSize.x*1.5,m_PhysicalSize.y);
+        glVertex2f(m_PhysicalSize.x*(0.5 - wxrSpread),m_PhysicalSize.y);
+        glVertex2f(m_PhysicalSize.x*(0.5 + wxrSpread),m_PhysicalSize.y);
       glEnd();
 
       glPopMatrix(); // Restore the original model view matrix

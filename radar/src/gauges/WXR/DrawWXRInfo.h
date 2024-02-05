@@ -26,9 +26,13 @@ protected:
   /* Pointer to the calling Navigation Gauge */
   WXR* m_WXRGauge;
 
-  float sweepAngle = 0.0f; // Current angle of the radar sweep
-  float sweepSpeed = 1.0f; // Speed of the sweep (degrees per frame or per update)
-
+  float sweepTime = 5.0f; // radar sweep period
+  float minSweep = 55.0f;  // min sweep angle
+  float maxSweep = 305.0f;  // max sweep angle
+  float wxrSpread = 0.01f;  // radar beam spread
+			   //
+  int sweepReverse = 0; // radar sweep reverse 
+  int countReverse = 0; // only reverse the first time
 };
 
 } // end namespace ns
