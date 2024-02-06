@@ -13,14 +13,12 @@ $(top_srcdir)/lib/wxrdata.c \
 $(top_srcdir)/lib/xplanebeacon.c \
 $(top_srcdir)/lib/xplanewxr.c \
 WXR/WXR.cpp \
-WXR/DrawWXRL.cpp \
-WXR/DrawWXRR.cpp \
+WXR/DrawWXR.cpp \
 WXR/DrawWXRInfo.cpp \
 Dummy/DummyGauge.cpp
 
 noinst_HEADERS = \
 WXR/WXR.h \
-WXR/DrawWXRL.h \
-WXR/DrawWXRR.h \
+WXR/DrawWXR.h \
 WXR/DrawWXRInfo.h \
 Dummy/DummyGauge.h
