@@ -6,7 +6,7 @@
 #include "GaugeComponent.h"
 #include "CircleEvaluator.h"
 #include "WXR/WXR.h"
-#include "WXR/DrawWXR.h"
+#include "WXR/DrawWXRL.h"
 
 extern "C" {
   #include "wxrdata.h"
@@ -14,9 +14,9 @@ extern "C" {
 
 namespace ns
 {
-  DrawWXR::DrawWXR()
+  DrawWXRL::DrawWXRL()
   {
-    printf("DrawWXR constructed\n");
+    printf("DrawWXRL constructed\n");
     
     m_Font = m_pFontManager->LoadDefaultFont();
     m_WXRGauge = NULL;
@@ -25,11 +25,11 @@ namespace ns
     wxr_image = NULL;
   }
 
-  DrawWXR::~DrawWXR() // Destruction handled by base class
+  DrawWXRL::~DrawWXRL() // Destruction handled by base class
   {
   }
  
-  void DrawWXR::Render()
+  void DrawWXRL::Render()
   {
     GaugeComponent::Render();
 
@@ -89,7 +89,7 @@ namespace ns
 	float mpplat =  111.0 / (float) wxr_pixperlat / 1.852;
 
 	/* free WXR array and recreate it if we have new WXR data */
-	if (wxr_newdata == 1 && wxr_update == 2) {
+	if (wxr_newdata == 1 && wxr_update == 1) {
 	  printf("Plotting New WXR Data in NAV Display\n");
 	  m_wxr_ncol = wxr_ncol;
 	  m_wxr_nlin = wxr_nlin;
@@ -177,21 +177,9 @@ namespace ns
         // SCISSOR half of the screen
         glEnable(GL_SCISSOR_TEST);
 
-	//glScissor(0, 0, m_PixelSize.x*acf_x, m_PixelSize.y);
-
         glTranslatef(m_PhysicalSize.x*acf_x, m_PhysicalSize.y*acf_y, 0.0);
 
-        float t; // Factor to scale m_PixelSize.x by
-        if (countReverse == 1) { //reverse
-            t = cycleTime / 5.0f;
-        } else {
-            t = 1.0f - (cycleTime / 5.0f);
-        }
-
-        int scaledPixelSizeX = (int)(m_PixelSize.x * t); // Calculate scaled m_PixelSize.x
-        glScissor(0, 0, scaledPixelSizeX, m_PixelSize.y);
-
-        if (wxr_init == 0) {
+	if (wxr_init == 0) {
           glRotatef((int) lroundf(heading_map), 0, 0, 1);
           old_heading = heading_map;
 	  wxr_init = 1;
@@ -201,13 +189,17 @@ namespace ns
         if (cycleTime >= 0.0f && cycleTime < 1.0f) {
           if (countReverse == 0) {
 
-            if ( wxr_update == 2) {
+            wxr_reverse = 1 - wxr_reverse;
+
+            if ( wxr_update_count == 1) {
               glRotatef((int) lroundf(heading_map), 0, 0, 1);
               old_heading = heading_map;
-              printf("rotate new heading\n");
+              printf("Rotate radar to new heading\n");
+              wxr_update_count = 0;
+              wxr_update = 1;
 
             } else {
-              wxr_update = wxr_update + 1;
+              wxr_update_count = wxr_update_count + 1;
               glRotatef((int) lroundf(old_heading), 0, 0, 1);
 	    }
 
@@ -221,6 +213,16 @@ namespace ns
           countReverse = 0;
 	  //printf("rotate old heading\n");
         }
+
+        float t;
+        if (wxr_reverse == 0) { //reverse black sweep animation
+            t = cycleTime / 5.0f;
+        } else {
+            t = 1.0f - (cycleTime / 5.0f);
+        }
+
+        int scaledPixelSizeX = (int)(m_PixelSize.x * t); // Calculate scaled m_PixelSize.x
+        glScissor(0, 0, scaledPixelSizeX, m_PixelSize.y);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);

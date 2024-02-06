@@ -43,13 +43,14 @@ WXR::WXR()
   pDrawWXRL->SetSize(m_PhysicalSize.x,m_PhysicalSize.y);
   pDrawWXRL->SetWXRGauge(this);
   this->AddGaugeComponent(pDrawWXRL);
-
+/*
   DrawWXRR* pDrawWXRR = new DrawWXRR();
   pDrawWXRR->SetParentRenderObject(this);
   pDrawWXRR->SetPosition(m_PhysicalPosition.x,m_PhysicalPosition.y);
   pDrawWXRR->SetSize(m_PhysicalSize.x,m_PhysicalSize.y);
   pDrawWXRR->SetWXRGauge(this);
   this->AddGaugeComponent(pDrawWXRR);
+*/
 
   /* Create Gauge Component that renders the Circles and other Info */
   DrawWXRInfo* pDrawWXRInfo = new DrawWXRInfo();

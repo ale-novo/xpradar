@@ -1,5 +1,5 @@
-#ifndef DrawWXR_h
-#define DrawWXR_h
+#ifndef DrawWXRL_h
+#define DrawWXRL_h
 
 #include "Gauge.h"
 #include "WXR.h"
@@ -7,12 +7,12 @@
 namespace ns
 {
 
-class DrawWXR : public GaugeComponent
+class DrawWXRL : public GaugeComponent
 {
 public:
 
-  DrawWXR();
-  virtual ~DrawWXR();
+  DrawWXRL();
+  virtual ~DrawWXRL();
   
   void Render();
   
@@ -38,7 +38,10 @@ protected:
   int sweepReverse = 0; // radar sweep reverse 
   int countReverse = 0; // only reverse the first time
   int wxr_update = 0;
-
+  int wxr_update_count = 0;
+  int wxr_reverse = 0;
+  int wxr_init = 0;
+  float old_heading;
 };
 
 } // end namespace ns
