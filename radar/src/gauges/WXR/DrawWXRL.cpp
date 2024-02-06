@@ -194,7 +194,7 @@ namespace ns
             if ( wxr_update_count == 1) {
               glRotatef((int) lroundf(heading_map), 0, 0, 1);
               old_heading = heading_map;
-              printf("Rotate radar to new heading\n");
+              //printf("Update radar to new heading\n");
               wxr_update_count = 0;
               wxr_update = 1;
 
@@ -215,14 +215,16 @@ namespace ns
         }
 
         float t;
-        if (wxr_reverse == 0) { //reverse black sweep animation
+        //if (wxr_reverse == 0) { //reverse radar update point
+        if (wxr_reverse == 1) {
             t = cycleTime / 5.0f;
         } else {
             t = 1.0f - (cycleTime / 5.0f);
         }
 
         int scaledPixelSizeX = (int)(m_PixelSize.x * t); // Calculate scaled m_PixelSize.x
-        glScissor(0, 0, scaledPixelSizeX, m_PixelSize.y);
+        //glScissor(0, 0, scaledPixelSizeX, m_PixelSize.y); // reverse black sweep anim
+        glScissor(scaledPixelSizeX, 0, m_PixelSize.x, m_PixelSize.y );
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
