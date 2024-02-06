@@ -90,8 +90,8 @@ namespace ns
       glBegin(GL_POLYGON);
         // The vertices should be defined relative to the center of rotation
         glVertex2f(m_PhysicalSize.x/2,0); // This vertex is at the center of rotation
-        glVertex2f(m_PhysicalSize.x*(0.5 - wxrSpread),m_PhysicalSize.y);
-        glVertex2f(m_PhysicalSize.x*(0.5 + wxrSpread),m_PhysicalSize.y);
+        glVertex2f(m_PhysicalSize.x*(0.5 - wxrSpread),m_PhysicalSize.y*0.95);
+        glVertex2f(m_PhysicalSize.x*(0.5 + wxrSpread),m_PhysicalSize.y*0.95);
       glEnd();
 
       glPopMatrix(); // Restore the original model view matrix

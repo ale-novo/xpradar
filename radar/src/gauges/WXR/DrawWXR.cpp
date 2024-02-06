@@ -188,20 +188,10 @@ namespace ns
 
         if (cycleTime >= 0.0f && cycleTime < 1.0f) {
           if (countReverse == 0) {
-
-            wxr_reverse = 1 - wxr_reverse;
-
-            if ( wxr_update_count == 1) {
-              glRotatef((int) lroundf(heading_map), 0, 0, 1);
-              old_heading = heading_map;
-              printf("Update radar to new heading\n");
-              wxr_update_count = 0;
-              wxr_update = 1;
-
-            } else {
-              wxr_update_count = wxr_update_count + 1;
-              glRotatef((int) lroundf(old_heading), 0, 0, 1);
-	    }
+            glRotatef((int) lroundf(heading_map), 0, 0, 1);
+            old_heading = heading_map;
+            printf("Update radar to new heading\n");
+            wxr_update = 1;
 
           } else {
             glRotatef((int) lroundf(old_heading), 0, 0, 1);
@@ -215,11 +205,12 @@ namespace ns
         }
 
         float t;
-        if (wxr_reverse == 0) { //reverse radar update point
-        //if (wxr_reverse == 1) {
-            t = cycleTime / 5.0f;
+        float halfSweepTime = sweepTime * 0.5;
+
+        if (cycleTime <= halfSweepTime) {
+          t = cycleTime / halfSweepTime;
         } else {
-            t = 1.0f - (cycleTime / 5.0f);
+          t = 1.0f - ((cycleTime - halfSweepTime) / halfSweepTime);
         }
 
         int scaledPixelSizeX = (int)(m_PixelSize.x * t);

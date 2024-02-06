@@ -33,15 +33,12 @@ protected:
   int m_wxr_ncol;
   int m_wxr_nlin;
 
-  float sweepTime = 5.0f; // radar sweep period
+  float sweepTime = 10.0f; // radar sweep period
                            //
-  int sweepReverse = 0; // radar sweep reverse 
   int countReverse = 0; // only reverse the first time
-  int wxr_update = 0;
-  int wxr_update_count = 0;
-  int wxr_reverse = 0;
-  int wxr_init = 0;
-  float old_heading;
+  int wxr_update = 0; // update wxr image only at the start of sweep
+  int wxr_init = 0; //
+  float old_heading; // save old heading
 };
 
 } // end namespace ns
