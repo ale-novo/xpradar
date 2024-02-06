@@ -27,9 +27,9 @@ protected:
   WXR* m_WXRGauge;
 
   float sweepTime = 5.0f; // radar sweep period
-  float minSweep = 55.0f;  // min sweep angle
-  float maxSweep = 305.0f;  // max sweep angle
-  float wxrSpread = 0.01f;  // radar beam spread
+  float minSweep = 52.0f;  // min sweep angle
+  float maxSweep = 308.0f;  // max sweep angle
+  float wxrSpread = 0.005f;  // radar beam spread
 			   //
   int sweepReverse = 0; // radar sweep reverse 
   int countReverse = 0; // only reverse the first time

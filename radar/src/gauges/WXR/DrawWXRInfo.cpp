@@ -35,9 +35,6 @@ namespace ns
     float fontSize = 4.0 * m_PhysicalSize.x / 150.0;
     float lineWidth = 3.0;
 
-    // double dtor = 0.0174533; /* radians per degree */
-    // double radeg = 57.2958;  /* degree per radians */
-
     // define ACF center position in relative coordinates
     float acf_x = 0.500;
     float acf_y = 0.000;
@@ -99,8 +96,8 @@ namespace ns
       // Translate back to the original position
       glTranslatef(-m_PhysicalSize.x/2, 0, 0);
 
-      // Set color to black
-      glColor3ub(0,0,0);
+      // Set color
+      glColor3ub(0,255,0);
 
       // Draw the triangle
       glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
