@@ -1,5 +1,5 @@
-#ifndef DrawWXRL_h
-#define DrawWXRL_h
+#ifndef DrawWXR_h
+#define DrawWXR_h
 
 #include "Gauge.h"
 #include "WXR.h"
@@ -7,12 +7,12 @@
 namespace ns
 {
 
-class DrawWXRL : public GaugeComponent
+class DrawWXR : public GaugeComponent
 {
 public:
 
-  DrawWXRL();
-  virtual ~DrawWXRL();
+  DrawWXR();
+  virtual ~DrawWXR();
   
   void Render();
   

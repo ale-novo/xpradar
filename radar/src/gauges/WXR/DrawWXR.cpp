@@ -6,7 +6,7 @@
 #include "GaugeComponent.h"
 #include "CircleEvaluator.h"
 #include "WXR/WXR.h"
-#include "WXR/DrawWXRL.h"
+#include "WXR/DrawWXR.h"
 
 extern "C" {
   #include "wxrdata.h"
@@ -14,9 +14,9 @@ extern "C" {
 
 namespace ns
 {
-  DrawWXRL::DrawWXRL()
+  DrawWXR::DrawWXR()
   {
-    printf("DrawWXRL constructed\n");
+    printf("DrawWXR constructed\n");
     
     m_Font = m_pFontManager->LoadDefaultFont();
     m_WXRGauge = NULL;
@@ -25,11 +25,11 @@ namespace ns
     wxr_image = NULL;
   }
 
-  DrawWXRL::~DrawWXRL() // Destruction handled by base class
+  DrawWXR::~DrawWXR() // Destruction handled by base class
   {
   }
  
-  void DrawWXRL::Render()
+  void DrawWXR::Render()
   {
     GaugeComponent::Render();
 

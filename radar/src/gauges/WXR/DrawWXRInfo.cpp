@@ -55,35 +55,21 @@ namespace ns
     // initial sweep angle
     float sweepAngle = 45.0f;
     float halfSweepTime = sweepTime * 0.5;
+    float quarterSweepTime = sweepTime * 0.25;
+    float s5SweepTime = sweepTime * 0.75;
 
-    if (cycleTime >= 0.0f && cycleTime < 1.0f) {
-      if (countReverse == 0) {
-        sweepReverse = 1 - sweepReverse;
-        //printf("reverse sweep\n");
-      }
-      countReverse = countReverse + 1;
+
+    if (cycleTime <= quarterSweepTime) {
+      sweepAngle = minSweep * (1 - (cycleTime / quarterSweepTime));
+    } else if (cycleTime <= halfSweepTime) {
+      sweepAngle = 359 - ((cycleTime - quarterSweepTime) / quarterSweepTime) * (359 - maxSweep);
+    } else if (cycleTime <= s5SweepTime) {
+      sweepAngle = maxSweep + ((cycleTime - halfSweepTime) / quarterSweepTime) * (359 - maxSweep);
     } else {
-      countReverse = 0;
-    }
-
-    if (sweepReverse == 0) {
-
-      if (cycleTime <= halfSweepTime) {
-        sweepAngle = minSweep * (1 - (cycleTime / halfSweepTime));
-      } else {
-        sweepAngle = 359 + (maxSweep - 359) * ((cycleTime - halfSweepTime) / halfSweepTime);
-      }
-
-    } else {
-      if (cycleTime <= halfSweepTime) {
-        sweepAngle = maxSweep + (359 - maxSweep) * (cycleTime / halfSweepTime);
-      } else {
-        sweepAngle = minSweep * ((cycleTime - halfSweepTime) / halfSweepTime);
-      }
+      sweepAngle = ((cycleTime - s5SweepTime) / quarterSweepTime) * minSweep;
     }
 
     if ((heading_map != FLT_MISS) && (*magnetic_variation != FLT_MISS)) {
-
       glMatrixMode(GL_MODELVIEW);
       glPushMatrix();
 
