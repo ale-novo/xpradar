@@ -47,6 +47,7 @@ namespace ns
           wxr_image_r[i*4*wxr_col+j*4+3] = 255; /* Transparent */
       }
     }
+
   }
 
   DrawWXR::~DrawWXR() // Destruction handled by base class
@@ -58,7 +59,7 @@ namespace ns
     GaugeComponent::Render();
 
     float mapRange = m_WXRGauge->GetMapRange();
- 
+
     // define geometric stuff
     float fontSize = 4.0 * m_PhysicalSize.x / 150.0;
 
@@ -94,6 +95,8 @@ namespace ns
     //printf("Cycle Time: %f seconds\n", cycleTime);
 
     float halfSweepTime = sweepTime * 0.5;
+    float quarterSweepTime = sweepTime * 0.25;
+    float treeqSweepTime = sweepTime * 0.75;
 
     // The input coordinates are in lon/lat, so we have to rotate against true heading
     // despite the NAV display is showing mag heading
@@ -212,6 +215,7 @@ namespace ns
 	if (wxr_init_l == 0) {
           glRotatef((int) lroundf(heading_map), 0, 0, 1);
           old_heading_l = heading_map;
+	  old_range_l = mapRange;
 	  wxr_init_l = 1;
         }
 
@@ -219,6 +223,7 @@ namespace ns
           if (countReverse_l == 0) {
             glRotatef((int) lroundf(heading_map), 0, 0, 1);
             old_heading_l = heading_map;
+            old_range_l = mapRange;
             //printf("Update radar L to new heading\n");
             wxr_update_l = 1;
 
@@ -232,6 +237,28 @@ namespace ns
           countReverse_l = 0;
         }
 
+/*
+    float lnormalizedTime;
+    float langle; // Angle in radians
+    float lscaledPixelSizeX;
+
+    float lminAngle = 0 * PI / 180;
+    float lmaxAngle = 52 * PI / 180;
+
+    if (cycleTime <= halfSweepTime) {
+        lnormalizedTime = cycleTime / halfSweepTime;
+        langle = lminAngle + (lmaxAngle - lminAngle) * lnormalizedTime;
+    } else {
+        lnormalizedTime = (cycleTime - halfSweepTime) / halfSweepTime;
+        langle = lmaxAngle - (lmaxAngle - lminAngle) * lnormalizedTime;
+    }
+    printf("angle %f\n", langle);
+
+    lscaledPixelSizeX = (cos(langle) + 1) / 2 * m_PixelSize.x;
+    glScissor(0, 0, lscaledPixelSizeX, m_PixelSize.y); // reverse black sweep anim
+*/
+
+	//
         float tl;
 
         if (cycleTime <= halfSweepTime) {
@@ -243,8 +270,9 @@ namespace ns
         int lscaledPixelSizeX = (int)(m_PixelSize.x * tl);
 
         glScissor(0, 0, lscaledPixelSizeX, m_PixelSize.y); // reverse black sweep anim
-        //glScissor(lscaledPixelSizeX, 0, m_PixelSize.x, m_PixelSize.y );
 
+	//
+	
         if ( wxr_update_l == 1 && wxr_image ) {
           if (wxr_newdata_l == 1) {
 
@@ -272,11 +300,11 @@ namespace ns
 		      m_wxr_ncol,  m_wxr_nlin, 0, GL_RGBA,
 		      GL_UNSIGNED_BYTE, wxr_image_l);
 
-	float lscx = 0.5 * ((float) m_wxr_ncol) * mpplon / mapRange * map_size * cos(M_PI / 180.0 * aircraftLat);
-	float lscy = 0.5 * ((float) m_wxr_nlin) * mpplat / mapRange * map_size;
-	float ltx = (textureCenterLon - aircraftLon) * ((float) wxr_pixperlon) * mpplon / mapRange * map_size *
+	float lscx = 0.5 * ((float) m_wxr_ncol) * mpplon / old_range_l * map_size * cos(M_PI / 180.0 * aircraftLat);
+	float lscy = 0.5 * ((float) m_wxr_nlin) * mpplat / old_range_l * map_size;
+	float ltx = (textureCenterLon - aircraftLon) * ((float) wxr_pixperlon) * mpplon / old_range_l * map_size *
 	  cos(M_PI / 180.0 * aircraftLat);
-	float lty = (textureCenterLat - aircraftLat) * ((float) wxr_pixperlat) * mpplat / mapRange * map_size;
+	float lty = (textureCenterLat - aircraftLat) * ((float) wxr_pixperlat) * mpplat / old_range_l * map_size;
 	
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
@@ -308,6 +336,7 @@ namespace ns
 	if (wxr_init_r == 0) {
           glRotatef((int) lroundf(heading_map), 0, 0, 1);
           old_heading_r = heading_map;
+          old_range_r = mapRange;
 	  wxr_init_r = 1;
         }
 
@@ -315,6 +344,7 @@ namespace ns
           if (countReverse_r == 0) {
             glRotatef((int) lroundf(heading_map), 0, 0, 1);
             old_heading_r = heading_map;
+            old_range_r = mapRange;
             //printf("Update radar R to new heading\n");
             wxr_update_r = 1;
 
@@ -328,6 +358,26 @@ namespace ns
           countReverse_r = 0;
         }
 
+/*
+    float rnormalizedTime;
+    float rangle; // Angle in radians
+    float rscaledPixelSizeX;
+
+    float rminAngle = 0 * PI / 180;
+    float rmaxAngle = 52 * PI / 180;
+
+    if (cycleTime <= halfSweepTime) {
+        rnormalizedTime = cycleTime / halfSweepTime;
+        rangle = rminAngle + (rmaxAngle - rminAngle) * rnormalizedTime;
+    } else {
+        rnormalizedTime = (cycleTime - halfSweepTime) / halfSweepTime;
+        rangle = rmaxAngle - (rmaxAngle - rminAngle) * rnormalizedTime;
+    }
+    rscaledPixelSizeX = (cos(rangle) + 1) / 2 * m_PixelSize.x;
+    glScissor(rscaledPixelSizeX, 0, m_PixelSize.x, m_PixelSize.y );
+*/
+
+	//
         float tr;
 
         if (cycleTime <= halfSweepTime) {
@@ -338,9 +388,10 @@ namespace ns
 
         int rscaledPixelSizeX = (int)(m_PixelSize.x * tr);
 
-        //glScissor(0, 0, rscaledPixelSizeX, m_PixelSize.y); // reverse black sweep anim
-        glScissor(rscaledPixelSizeX, 0, m_PixelSize.x, m_PixelSize.y );
+        glScissor(rscaledPixelSizeX, 0, m_PixelSize.x, m_PixelSize.y ); //reverse black anim
 
+	//
+	
 	if ( wxr_update_r == 1 && wxr_image ) {
           if (wxr_newdata_r == 1) {
 
@@ -368,11 +419,11 @@ namespace ns
 		      m_wxr_ncol,  m_wxr_nlin, 0, GL_RGBA,
 		      GL_UNSIGNED_BYTE, wxr_image_r);
 
-	float rscx = 0.5 * ((float) m_wxr_ncol) * mpplon / mapRange * map_size * cos(M_PI / 180.0 * aircraftLat);
-	float rscy = 0.5 * ((float) m_wxr_nlin) * mpplat / mapRange * map_size;
-	float rtx = (textureCenterLon - aircraftLon) * ((float) wxr_pixperlon) * mpplon / mapRange * map_size *
+	float rscx = 0.5 * ((float) m_wxr_ncol) * mpplon / old_range_r * map_size * cos(M_PI / 180.0 * aircraftLat);
+	float rscy = 0.5 * ((float) m_wxr_nlin) * mpplat / old_range_r * map_size;
+	float rtx = (textureCenterLon - aircraftLon) * ((float) wxr_pixperlon) * mpplon / old_range_r * map_size *
 	  cos(M_PI / 180.0 * aircraftLat);
-	float rty = (textureCenterLat - aircraftLat) * ((float) wxr_pixperlat) * mpplat / mapRange * map_size;
+	float rty = (textureCenterLat - aircraftLat) * ((float) wxr_pixperlat) * mpplat / old_range_r * map_size;
 	
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);

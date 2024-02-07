@@ -48,6 +48,16 @@ protected:
   int wxr_newdata_r = 0;
   float old_heading_l; // save old heading
   float old_heading_r;
+
+  const float PI = 3.14159265358979323846f;
+  float old_range_l = 0.0;
+  float old_range_r = 0.0;
+
+  int wxr_col = 1200;
+  int wxr_lin = 1200;
+  int i = 0;
+  int j = 0;
+
 };
 
 } // end namespace ns
