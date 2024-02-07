@@ -39,12 +39,12 @@ namespace ns
           wxr_image_l[i*4*wxr_col+j*4+0] = 0;
           wxr_image_l[i*4*wxr_col+j*4+1] = 0;
           wxr_image_l[i*4*wxr_col+j*4+2] = 0;
-          wxr_image_l[i*4*wxr_col+j*4+3] = 255; /* Transparent */
+          wxr_image_l[i*4*wxr_col+j*4+3] = 255; // Transparent 
 
           wxr_image_r[i*4*wxr_col+j*4+0] = 0;
           wxr_image_r[i*4*wxr_col+j*4+1] = 0;
           wxr_image_r[i*4*wxr_col+j*4+2] = 0;
-          wxr_image_r[i*4*wxr_col+j*4+3] = 255; /* Transparent */
+          wxr_image_r[i*4*wxr_col+j*4+3] = 255; // Transparent 
       }
     }
 
@@ -83,9 +83,9 @@ namespace ns
      // What's the altitude? (feet) --> needed to calculate effect of tilting the radar image
     float *pressure_altitude = link_dataref_flt("sim/flightmodel/misc/h_ind",0);
   
-    /* Sample Datarefs for controlling WXR gain and tilt */
-    float *wxr_gain = link_dataref_flt("radar/wxr/gain",-2); /* Gain should go from 0.1 .. 2.0 */
-    float *wxr_tilt = link_dataref_flt("radar/wxr/tilt",-2); /* Tilt in degrees up/down : not implemented yet */
+    // Sample Datarefs for controlling WXR gain and tilt 
+    float *wxr_gain = link_dataref_flt("radar/wxr/gain",-2); // Gain should go from 0.1 .. 2.0
+    float *wxr_tilt = link_dataref_flt("radar/wxr/tilt",-2); // Tilt in degrees up/down : not implemented yet
 
     // get a time
     float *elapsed = link_dataref_flt("sim/time/local_time_sec", -1);
@@ -105,20 +105,20 @@ namespace ns
       // Shift center and rotate about heading
       glMatrixMode(GL_MODELVIEW);
 
-      /* valid coordinates and full radar image received */
+      // valid coordinates and full radar image received
       if ((aircraftLon >= -180.0) && (aircraftLon <= 180.0) &&
 	  (aircraftLat >= -90.0) && (aircraftLat <= 90.0)) {
 	
-	/* Copy WXR data into GL Texture Array */
+	// Copy WXR data into GL Texture Array
 	float textureCenterLon = (float) wxr_lonmin + (float) wxr_ncol / (float) wxr_pixperlon * 0.5;
 	float textureCenterLat = (float) wxr_latmin + (float) wxr_nlin / (float) wxr_pixperlat * 0.5;
 
-	/* miles per radar pixel. Each pixel .
-	   Each degree lat is 111 km apart and each mile is 1.852 km */
+	// miles per radar pixel. Each pixel .
+	//  Each degree lat is 111 km apart and each mile is 1.852 km
 	float mpplon =  111.0 / (float) wxr_pixperlon / 1.852;
 	float mpplat =  111.0 / (float) wxr_pixperlat / 1.852;
 
-	/* free WXR array and recreate it if we have new WXR data */
+	// free WXR array and recreate it if we have new WXR data
 	if (wxr_newdata == 1) {
 
           wxr_newdata_l = 1;
@@ -136,9 +136,9 @@ namespace ns
 	  if (gain < 0.1) gain = 0.1;
 	  if (gain > 2.0) gain = 2.0;
 	
-	  /* copy temporary WXR array to WXR array */
-	  /* TODO: OPENGL Transparency not working */
-	  /* TODO: Only create image if data has changed */
+	  // copy temporary WXR array to WXR array
+	  // TODO: OPENGL Transparency not working
+	  // TODO: Only create image if data has changed
 
 	  for (i = 0; i < m_wxr_nlin; i++) {
 	    for (j = 0; j < m_wxr_ncol; j++) {
@@ -147,58 +147,58 @@ namespace ns
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Transparent
 	      } else if (wxr_data[i][j]*gain <= 10) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Transparent
 	      } else if (wxr_data[i][j]*gain <= 20) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Transparent
 	      } else if (wxr_data[i][j]*gain <= 30) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Transparent
 	      } else if (wxr_data[i][j]*gain <= 40) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 250;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Non-Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Non-Transparent
 	      } else if (wxr_data[i][j]*gain <= 50) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 250;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Non-Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Non-Transparent
 	      } else if (wxr_data[i][j]*gain <= 60) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 250;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Non-Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Non-Transparent
 	      } else if (wxr_data[i][j]*gain <= 70) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 250;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 250;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Non-Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Non-Transparent
 	      } else if (wxr_data[i][j]*gain <= 80) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 250;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 250;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Non-Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Non-Transparent
 	      } else if (wxr_data[i][j]*gain <= 90) {
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 250;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 0;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 0;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Non-Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Non-Transparent
 	      } else {
-		/* Magenta for Turbulence, not implemented in X-Plane, but take the highest level */
+		// Magenta for Turbulence, not implemented in X-Plane, but take the highest level
 		wxr_image[i*4*m_wxr_ncol+j*4+0] = 200;
 		wxr_image[i*4*m_wxr_ncol+j*4+1] = 45;
 		wxr_image[i*4*m_wxr_ncol+j*4+2] = 200;
-		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; /* Non-Transparent */
+		wxr_image[i*4*m_wxr_ncol+j*4+3] = 255; // Non-Transparent
 	      }
 	    }
 	  }
@@ -236,27 +236,6 @@ namespace ns
           glRotatef((int) lroundf(old_heading_l), 0, 0, 1);
           countReverse_l = 0;
         }
-
-/*
-    float lnormalizedTime;
-    float langle; // Angle in radians
-    float lscaledPixelSizeX;
-
-    float lminAngle = 0 * PI / 180;
-    float lmaxAngle = 52 * PI / 180;
-
-    if (cycleTime <= halfSweepTime) {
-        lnormalizedTime = cycleTime / halfSweepTime;
-        langle = lminAngle + (lmaxAngle - lminAngle) * lnormalizedTime;
-    } else {
-        lnormalizedTime = (cycleTime - halfSweepTime) / halfSweepTime;
-        langle = lmaxAngle - (lmaxAngle - lminAngle) * lnormalizedTime;
-    }
-    printf("angle %f\n", langle);
-
-    lscaledPixelSizeX = (cos(langle) + 1) / 2 * m_PixelSize.x;
-    glScissor(0, 0, lscaledPixelSizeX, m_PixelSize.y); // reverse black sweep anim
-*/
 
 	//
         float tl;
@@ -358,25 +337,6 @@ namespace ns
           countReverse_r = 0;
         }
 
-/*
-    float rnormalizedTime;
-    float rangle; // Angle in radians
-    float rscaledPixelSizeX;
-
-    float rminAngle = 0 * PI / 180;
-    float rmaxAngle = 52 * PI / 180;
-
-    if (cycleTime <= halfSweepTime) {
-        rnormalizedTime = cycleTime / halfSweepTime;
-        rangle = rminAngle + (rmaxAngle - rminAngle) * rnormalizedTime;
-    } else {
-        rnormalizedTime = (cycleTime - halfSweepTime) / halfSweepTime;
-        rangle = rmaxAngle - (rmaxAngle - rminAngle) * rnormalizedTime;
-    }
-    rscaledPixelSizeX = (cos(rangle) + 1) / 2 * m_PixelSize.x;
-    glScissor(rscaledPixelSizeX, 0, m_PixelSize.x, m_PixelSize.y );
-*/
-
 	//
         float tr;
 
@@ -444,7 +404,6 @@ namespace ns
 	// end of down-shifted and rotated coordinate system
 	glPopMatrix();
 //
-
 	// Cover radar image behind aircraft and beyond range of XX NM
 	glPushMatrix();
 
