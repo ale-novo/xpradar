@@ -1,3 +1,25 @@
+# Radar
+
+## Analalog
+* `Tilt:` -10 <-> 0 <-> +10
+* `Gain:` MIN <-> MAX
+* `Intensity:` MAX <-> OFF
+
+## Buttons
+* `Range:` 200, 100, 50, 25, 10
+* `STBY:` STANDBY mode
+* `WXC:` Weather Contour mode
+* `MAP:` MAP mode
+* `TEST:` TEST mode
+* `FRZ:` FREEZE image mode
+
+## Switches
+* `TGT ALERT:` TARGET ALERT mode
+* `STAB:` Stabilization mode
+* `AZ MK:` Azimuth Marker mode
+
+## Instalation
+
 ## Resolve above depencies, for debian/ubuntu:
 
 ```

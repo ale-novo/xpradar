@@ -84,8 +84,8 @@ namespace ns
     float *pressure_altitude = link_dataref_flt("sim/flightmodel/misc/h_ind",0);
   
     /* Sample Datarefs for controlling WXR gain and tilt */
-    float *wxr_gain = link_dataref_flt("xpserver/wxr_gain",-2); /* Gain should go from 0.1 .. 2.0 */
-    float *wxr_tilt = link_dataref_flt("xpserver/wxr_tilt",-2); /* Tilt in degrees up/down : not implemented yet */
+    float *wxr_gain = link_dataref_flt("radar/wxr/gain",-2); /* Gain should go from 0.1 .. 2.0 */
+    float *wxr_tilt = link_dataref_flt("radar/wxr/tilt",-2); /* Tilt in degrees up/down : not implemented yet */
 
     // get a time
     float *elapsed = link_dataref_flt("sim/time/local_time_sec", -1);
