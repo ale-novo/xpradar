@@ -63,7 +63,7 @@ class PythonInterface:
             "radar/wxr/stby",
             xp.Type_Int,                                      # The types we support
             1,                                                  # Writable
-            self.GetInt, self.SetInt,   # Accessors for floats
+            self.GetStby, self.SetStby,   # Accessors for floats
             0, 0,
             0, 0,                                               # Accessors for doubles
             0, 0,                                               # No accessors for int arrays
@@ -166,6 +166,31 @@ class PythonInterface:
 
         if (self.int):
             xp.unregisterDataAccessor(self.int)
+
+        if (self.stby):
+            xp.unregisterDataAccessor(self.stby)
+
+        if (self.test):
+            xp.unregisterDataAccessor(self.test)
+
+        if (self.wxc):
+            xp.unregisterDataAccessor(self.wxc)
+
+        if (self.map):
+            xp.unregisterDataAccessor(self.map)
+
+        if (self.frz):
+            xp.unregisterDataAccessor(self.frz)
+
+        if (self.tgt):
+            xp.unregisterDataAccessor(self.tgt)
+
+        if (self.stab):
+            xp.unregisterDataAccessor(self.stab)
+
+        if (self.azmk):
+            xp.unregisterDataAccessor(self.azmk)
+
 
     def XPluginEnable(self):
         # Register datarefs with datareftool, to make debugging easier!
