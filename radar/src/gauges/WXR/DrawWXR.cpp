@@ -23,31 +23,6 @@ namespace ns
     m_wxr_ncol = 0;
     m_wxr_nlin = 0;
     wxr_image = NULL;
-
-    // init wxr_image_l and r as black.
-    int wxr_col = 1200;
-    int wxr_lin = 1200;
-
-    int i = 0;
-    int j = 0;
-
-    wxr_image_l = (unsigned char*)malloc(wxr_lin * wxr_col * 4 * sizeof(unsigned char));
-    wxr_image_r = (unsigned char*)malloc(wxr_lin * wxr_col * 4 * sizeof(unsigned char));
-
-    for (i = 0; i < wxr_lin; i++) {
-      for (j = 0; j < wxr_col; j++) {
-          wxr_image_l[i*4*wxr_col+j*4+0] = 0;
-          wxr_image_l[i*4*wxr_col+j*4+1] = 0;
-          wxr_image_l[i*4*wxr_col+j*4+2] = 0;
-          wxr_image_l[i*4*wxr_col+j*4+3] = 255; // Transparent 
-
-          wxr_image_r[i*4*wxr_col+j*4+0] = 0;
-          wxr_image_r[i*4*wxr_col+j*4+1] = 0;
-          wxr_image_r[i*4*wxr_col+j*4+2] = 0;
-          wxr_image_r[i*4*wxr_col+j*4+3] = 255; // Transparent 
-      }
-    }
-
   }
 
   DrawWXR::~DrawWXR() // Destruction handled by base class
@@ -87,17 +62,6 @@ namespace ns
     float *wxr_gain = link_dataref_flt("radar/wxr/gain",-2); // Gain should go from 0.1 .. 2.0
     float *wxr_tilt = link_dataref_flt("radar/wxr/tilt",-2); // Tilt in degrees up/down : not implemented yet
 
-    // get a time
-    float *elapsed = link_dataref_flt("sim/time/local_time_sec", -1);
-
-    // convert to periods
-    float cycleTime = fmod(*elapsed, sweepTime);
-    //printf("Cycle Time: %f seconds\n", cycleTime);
-
-    float halfSweepTime = sweepTime * 0.5;
-    float quarterSweepTime = sweepTime * 0.25;
-    float treeqSweepTime = sweepTime * 0.75;
-
     // The input coordinates are in lon/lat, so we have to rotate against true heading
     // despite the NAV display is showing mag heading
 
@@ -120,9 +84,6 @@ namespace ns
 
 	// free WXR array and recreate it if we have new WXR data
 	if (wxr_newdata == 1) {
-
-          wxr_newdata_l = 1;
-	  wxr_newdata_r = 1;
 
 	  printf("Plotting New WXR Data\n");
 	  m_wxr_ncol = wxr_ncol;
@@ -205,66 +166,10 @@ namespace ns
 	  wxr_newdata = 0;
 	}
 
-// LEFT
         glPushMatrix();
-        // SCISSOR half of the screen
-        glEnable(GL_SCISSOR_TEST);
-
         glTranslatef(m_PhysicalSize.x*acf_x, m_PhysicalSize.y*acf_y, 0.0);
 
-	if (wxr_init_l == 0) {
-          glRotatef((int) lroundf(heading_map), 0, 0, 1);
-          old_heading_l = heading_map;
-	  old_range_l = mapRange;
-	  wxr_init_l = 1;
-        }
-
-        if (cycleTime >= 0.0f && cycleTime < 1.0f) {
-          if (countReverse_l == 0) {
-            glRotatef((int) lroundf(heading_map), 0, 0, 1);
-            old_heading_l = heading_map;
-            old_range_l = mapRange;
-            //printf("Update radar L to new heading\n");
-            wxr_update_l = 1;
-
-          } else {
-            glRotatef((int) lroundf(old_heading_l), 0, 0, 1);
-          }
-          countReverse_l = countReverse_l + 1;
-
-        } else {
-          glRotatef((int) lroundf(old_heading_l), 0, 0, 1);
-          countReverse_l = 0;
-        }
-
-	//
-        float tl;
-
-        if (cycleTime <= halfSweepTime) {
-          tl = cycleTime / halfSweepTime;
-        } else {
-          tl = 1.0f - ((cycleTime - halfSweepTime) / halfSweepTime);
-        }
-
-        int lscaledPixelSizeX = (int)(m_PixelSize.x * tl);
-
-        glScissor(0, 0, lscaledPixelSizeX, m_PixelSize.y); // reverse black sweep anim
-
-	//
-	
-        if ( wxr_update_l == 1 && wxr_image ) {
-          if (wxr_newdata_l == 1) {
-
-            if (wxr_image_l) free(wxr_image_l);
-            wxr_image_l = NULL;
-            wxr_image_l = (unsigned char*)malloc(m_wxr_nlin * m_wxr_ncol * 4 * sizeof(unsigned char));
-            printf("Update WXR image LEFT\n");
- 
-            memcpy(wxr_image_l, wxr_image, m_wxr_nlin * m_wxr_ncol * 4 * sizeof(unsigned char));
-            wxr_newdata_l = 0;
-          }
-          wxr_update_l = 0;
-        }
+        glRotatef((int) lroundf(heading_map), 0, 0, 1);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
@@ -277,13 +182,13 @@ namespace ns
 	
 	glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA,
 		      m_wxr_ncol,  m_wxr_nlin, 0, GL_RGBA,
-		      GL_UNSIGNED_BYTE, wxr_image_l);
+		      GL_UNSIGNED_BYTE, wxr_image);
 
-	float lscx = 0.5 * ((float) m_wxr_ncol) * mpplon / old_range_l * map_size * cos(M_PI / 180.0 * aircraftLat);
-	float lscy = 0.5 * ((float) m_wxr_nlin) * mpplat / old_range_l * map_size;
-	float ltx = (textureCenterLon - aircraftLon) * ((float) wxr_pixperlon) * mpplon / old_range_l * map_size *
+	float lscx = 0.5 * ((float) m_wxr_ncol) * mpplon / mapRange * map_size * cos(M_PI / 180.0 * aircraftLat);
+	float lscy = 0.5 * ((float) m_wxr_nlin) * mpplat / mapRange * map_size;
+	float ltx = (textureCenterLon - aircraftLon) * ((float) wxr_pixperlon) * mpplon / mapRange * map_size *
 	  cos(M_PI / 180.0 * aircraftLat);
-	float lty = (textureCenterLat - aircraftLat) * ((float) wxr_pixperlat) * mpplat / old_range_l * map_size;
+	float lty = (textureCenterLat - aircraftLat) * ((float) wxr_pixperlat) * mpplat / mapRange * map_size;
 	
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
@@ -301,109 +206,8 @@ namespace ns
 	glFlush();
 
 	// end of down-shifted and rotated coordinate system
-        glDisable(GL_SCISSOR_TEST);
 	glPopMatrix();
 
-// RIGHT
-
-        glPushMatrix();
-        // SCISSOR half of the screen
-        glEnable(GL_SCISSOR_TEST);
-
-        glTranslatef(m_PhysicalSize.x*acf_x, m_PhysicalSize.y*acf_y, 0.0);
-
-	if (wxr_init_r == 0) {
-          glRotatef((int) lroundf(heading_map), 0, 0, 1);
-          old_heading_r = heading_map;
-          old_range_r = mapRange;
-	  wxr_init_r = 1;
-        }
-
-        if (cycleTime >= 5.0f && cycleTime < 6.0f) {
-          if (countReverse_r == 0) {
-            glRotatef((int) lroundf(heading_map), 0, 0, 1);
-            old_heading_r = heading_map;
-            old_range_r = mapRange;
-            //printf("Update radar R to new heading\n");
-            wxr_update_r = 1;
-
-          } else {
-            glRotatef((int) lroundf(old_heading_r), 0, 0, 1);
-          }
-          countReverse_r = countReverse_r + 1;
-
-        } else {
-          glRotatef((int) lroundf(old_heading_r), 0, 0, 1);
-          countReverse_r = 0;
-        }
-
-	//
-        float tr;
-
-        if (cycleTime <= halfSweepTime) {
-          tr = cycleTime / halfSweepTime;
-        } else {
-          tr = 1.0f - ((cycleTime - halfSweepTime) / halfSweepTime);
-        }
-
-        int rscaledPixelSizeX = (int)(m_PixelSize.x * tr);
-
-        glScissor(rscaledPixelSizeX, 0, m_PixelSize.x, m_PixelSize.y ); //reverse black anim
-
-	//
-	
-	if ( wxr_update_r == 1 && wxr_image ) {
-          if (wxr_newdata_r == 1) {
-
-            if (wxr_image_r) free(wxr_image_r);
-            wxr_image_r = NULL;
-            wxr_image_r = (unsigned char*)malloc(m_wxr_nlin * m_wxr_ncol * 4 * sizeof(unsigned char));
-            printf("Update WXR image RIGHT\n");
-
-	    memcpy(wxr_image_r, wxr_image, m_wxr_nlin * m_wxr_ncol * 4 * sizeof(unsigned char));
-            wxr_newdata_r = 0;
-          }
-          wxr_update_r = 0;
-        }
- 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	// Remove border line
-	GLfloat rcolor[4]={0,0,0,1};
-	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, rcolor);
-	
-	glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA,
-		      m_wxr_ncol,  m_wxr_nlin, 0, GL_RGBA,
-		      GL_UNSIGNED_BYTE, wxr_image_r);
-
-	float rscx = 0.5 * ((float) m_wxr_ncol) * mpplon / old_range_r * map_size * cos(M_PI / 180.0 * aircraftLat);
-	float rscy = 0.5 * ((float) m_wxr_nlin) * mpplat / old_range_r * map_size;
-	float rtx = (textureCenterLon - aircraftLon) * ((float) wxr_pixperlon) * mpplon / old_range_r * map_size *
-	  cos(M_PI / 180.0 * aircraftLat);
-	float rty = (textureCenterLat - aircraftLat) * ((float) wxr_pixperlat) * mpplat / old_range_r * map_size;
-	
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-
-	glBegin(GL_TRIANGLES);
-        glTexCoord2f(0.0f, 1.0f); glVertex2f(-rscx+rtx,  rscy+rty);
-        glTexCoord2f(0.0f, 0.0f); glVertex2f(-rscx+rtx, -rscy+rty);
-        glTexCoord2f(1.0f, 1.0f); glVertex2f( rscx+rtx,  rscy+rty);
-        glTexCoord2f(1.0f, 1.0f); glVertex2f( rscx+rtx,  rscy+rty);
-        glTexCoord2f(0.0f, 0.0f); glVertex2f(-rscx+rtx, -rscy+rty);
-        glTexCoord2f(1.0f, 0.0f); glVertex2f( rscx+rtx, -rscy+rty);
-	glEnd();
-
-	glDisable (GL_TEXTURE_2D);
-	glFlush();
-        glDisable(GL_SCISSOR_TEST);
-
-	// end of down-shifted and rotated coordinate system
-	glPopMatrix();
-//
 	// Cover radar image behind aircraft and beyond range of XX NM
 	glPushMatrix();
 
@@ -470,7 +274,6 @@ namespace ns
 	glVertex2f(m_PhysicalSize.x/2,m_PhysicalSize.y*acf_y);
 	glEnd();
 
-//        glDisable(GL_SCISSOR_TEST);
 	glPopMatrix();
 	
       } // valid acf coordinates

@@ -29,34 +29,9 @@ protected:
   /* RGBA Array for later OpenGL Rendering
      Use single array instead of 3D array since it has to be contiguous memory */
   unsigned char *wxr_image;
-  unsigned char *wxr_image_l;
-  unsigned char *wxr_image_r;
 
   int m_wxr_ncol;
   int m_wxr_nlin;
-
-  float sweepTime = 10.0f; // radar sweep period
-                           //
-  int countReverse_l = 0; // only reverse the first time
-  int countReverse_r = 0;
-  int wxr_update_l = 0; // update wxr image only at the start of sweep
-  int wxr_update_r = 0; // update wxr image only at the start of sweep
-
-  int wxr_init_l = 0; //
-  int wxr_init_r = 0;
-  int wxr_newdata_l = 0;
-  int wxr_newdata_r = 0;
-  float old_heading_l; // save old heading
-  float old_heading_r;
-
-  const float PI = 3.14159265358979323846f;
-  float old_range_l = 0.0;
-  float old_range_r = 0.0;
-
-  int wxr_col = 1200;
-  int wxr_lin = 1200;
-  int i = 0;
-  int j = 0;
 
 };
 
